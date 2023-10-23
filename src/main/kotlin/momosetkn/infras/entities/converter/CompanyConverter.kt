@@ -4,9 +4,11 @@ import momosetkn.domain.Company
 import momosetkn.domain.Employee
 import momosetkn.domain.News
 import momosetkn.domain.Product
+import momosetkn.domain.ProductDetail
 import momosetkn.infras.entities.InfraCompanies
 import momosetkn.infras.entities.InfraEmployees
 import momosetkn.infras.entities.InfraNews
+import momosetkn.infras.entities.InfraProductDetails
 import momosetkn.infras.entities.InfraProducts
 
 object CompanyConverter {
@@ -39,6 +41,18 @@ object CompanyConverter {
         return Product(
             id = id,
             name = name,
+            details = productDetails.map { it.toModel() },
+            updatedBy = updatedBy,
+            updatedAt = updatedAt,
+            createdBy = createdBy,
+            createdAt = createdAt,
+        )
+    }
+
+    fun InfraProductDetails.toModel(): ProductDetail {
+        return ProductDetail(
+            id = id,
+            description = description,
             updatedBy = updatedBy,
             updatedAt = updatedAt,
             createdBy = createdBy,
@@ -89,6 +103,20 @@ object CompanyConverter {
             id = id,
             name = name,
             companyId = companyId,
+            updatedBy = updatedBy,
+            updatedAt = updatedAt,
+            createdBy = createdBy,
+            createdAt = createdAt,
+        ).also { products ->
+            products.productDetails.addAll(details.map { it.toInfra(id) })
+        }
+    }
+
+    fun ProductDetail.toInfra(productId: String): InfraProductDetails {
+        return InfraProductDetails(
+            id = id,
+            description = description,
+            productId = productId,
             updatedBy = updatedBy,
             updatedAt = updatedAt,
             createdBy = createdBy,

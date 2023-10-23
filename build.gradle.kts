@@ -71,6 +71,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-serialization:$kotlin_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-hocon:1.6.0")
 
+    // openapi-generator-cli
+//    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+//    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+//    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
     // di
     implementation("io.insert-koin:koin-core:$koin_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")

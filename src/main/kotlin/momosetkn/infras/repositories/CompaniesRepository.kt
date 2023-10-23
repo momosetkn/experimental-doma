@@ -9,6 +9,7 @@ import momosetkn.infras.entities.meta.Meta
 import momosetkn.infras.entities.meta.companies
 import momosetkn.infras.entities.meta.employees
 import momosetkn.infras.entities.meta.news
+import momosetkn.infras.entities.meta.productDetails
 import momosetkn.infras.entities.meta.products
 
 class CompaniesRepository {
@@ -45,6 +46,7 @@ class CompaniesRepository {
         entityql.insert(Meta.companies, items)
         entityql.insert(Meta.news, items.flatMap { it.news })
         entityql.insert(Meta.products, items.flatMap { it.products })
+        entityql.insert(Meta.productDetails, items.flatMap { it.products }.flatMap { it.productDetails })
         entityql.insert(Meta.employees, items.flatMap { it.employees })
     }
 }

@@ -3,10 +3,9 @@ package momosetkn.domain
 import java.time.LocalDateTime
 
 
-data class Product(
+data class ProductDetail(
     val id: String,
-    val name: String,
-    val details: List<ProductDetail>,
+    val description: String,
     val updatedBy: String,
     val updatedAt: LocalDateTime,
     val createdBy: String,

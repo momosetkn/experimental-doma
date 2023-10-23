@@ -47,6 +47,17 @@ CREATE TABLE products (
     FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
+CREATE TABLE product_details (
+    id VARCHAR(255) PRIMARY KEY,
+    description VARCHAR(255) NOT NULL,
+    product_id VARCHAR(255) NOT NULL,
+    updated_by VARCHAR(255) NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    created_by VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
 CREATE TABLE employees (
     id VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,

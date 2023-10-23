@@ -6,6 +6,7 @@ import momosetkn.infras.entities.InfraCompanies_
 import momosetkn.infras.entities.InfraEmployees_
 import momosetkn.infras.entities.InfraNews_
 import momosetkn.infras.entities.InfraProducts_
+import momosetkn.infras.entities.InfraProductDetails_
 
 
 /**
@@ -17,4 +18,5 @@ object Meta
 val Meta.companies by lazy { InfraCompanies_() }
 val Meta.news by lazy { InfraNews_() }
 val Meta.products by lazy { InfraProducts_() }
+val Meta.productDetails by lazy { InfraProductDetails_() }
 val Meta.employees by lazy { InfraEmployees_() }

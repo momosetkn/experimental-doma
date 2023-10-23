@@ -53,6 +53,23 @@ data class InfraProducts(
     @Column(name = "updated_at") val updatedAt: java.time.LocalDateTime,
     @Column(name = "created_at") val createdBy: String,
     @Column(name = "created_at") val createdAt: java.time.LocalDateTime,
+) {
+
+    @Transient
+    val productDetails: ArrayList<InfraProductDetails> = ArrayList()
+}
+
+@Entity(immutable = true, metamodel = Metamodel())
+@Table(name = "product_details")
+data class InfraProductDetails(
+    @Id @Column(name = "id") val id: String,
+    @Column(name = "description") val description: String,
+    @Column(name = "product_id") val productId: String,
+
+    @Column(name = "updated_by") val updatedBy: String,
+    @Column(name = "updated_at") val updatedAt: java.time.LocalDateTime,
+    @Column(name = "created_at") val createdBy: String,
+    @Column(name = "created_at") val createdAt: java.time.LocalDateTime,
 )
 
 @Entity(immutable = true, metamodel = Metamodel())

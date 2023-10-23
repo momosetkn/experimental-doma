@@ -4,6 +4,7 @@ import momosetkn.domain.Company
 import momosetkn.domain.Employee
 import momosetkn.domain.News
 import momosetkn.domain.Product
+import momosetkn.domain.ProductDetail
 import momosetkn.infras.database.ConnectionPoolDatasource
 import momosetkn.infras.database.doma.contexts.Db
 import momosetkn.infras.repositories.CompaniesRepository
@@ -41,12 +42,24 @@ val dummyDataDependencies = module {
             createdAt = get(),
         )
     }
+    factory {
+        Product(
+            id = get(),
+            name = get(),
+            details = get(named("List<ProductDetail>")),
+            updatedBy = get(),
+            updatedAt = get(),
+            createdBy = get(),
+            createdAt = get(),
+        )
+    }
     factoryOf(::News)
-    factoryOf(::Product)
     factoryOf(::Employee)
+    factoryOf(::ProductDetail)
     factory<List<News>>(named("List<News><")) { listOf(get(), get(), get()) }
     factory<List<Product>>(named("<Product>")) { listOf(get(), get(), get()) }
     factory<List<Employee>>(named("List<Employee>")) { listOf(get(), get(), get()) }
+    factory<List<ProductDetail>>(named("List<ProductDetail>")) { listOf(get(), get(), get()) }
     factory<String> { UUID.randomUUID().toString() }
     factory<LocalDateTime> {
         LocalDateTime.now().plusDays((Math.random() * 100).toLong())
