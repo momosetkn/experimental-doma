@@ -20,6 +20,13 @@ object Extension {
         return requireNotNull(fetchOne())
     }
 
+    @MustBeDocumented
+    @RequiresOptIn(
+        level = RequiresOptIn.Level.WARNING,
+        message = "実験的に実装"
+    )
+    public annotation class ExperimentalApi
+
     data class LoadContext<STORE_ENTITY>(
         val storeEntities: List<STORE_ENTITY>,
     ) {
@@ -159,6 +166,7 @@ object Extension {
         }
     }
 
+    @ExperimentalApi
     fun <ENTITY> EntityqlSelectStarting<ENTITY>.fetchAndSelectinload(
         block: LoadContext<ENTITY>.() -> Unit,
     ): List<ENTITY> {
@@ -169,6 +177,7 @@ object Extension {
         }
     }
 
+    @ExperimentalApi
     fun <ENTITY> EntityqlSelectStarting<ENTITY>.singleAndSelectinload(
         block: LoadContext<ENTITY>.() -> Unit,
     ): ENTITY {
@@ -179,6 +188,7 @@ object Extension {
         }
     }
 
+    @ExperimentalApi
     fun <ENTITY> EntityqlSelectStarting<ENTITY>.singleOrNullAndSelectinload(
         block: LoadContext<ENTITY>.() -> Unit,
     ): ENTITY? {
