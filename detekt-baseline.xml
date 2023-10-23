@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>EmptyDefaultConstructor:ConnectionPoolDatasource.kt$ConnectionPoolDatasource$( )</ID>
+    <ID>ForbiddenComment:Log.kt$// FIXME: Don't rely on bad hacks like this.</ID>
+    <ID>MagicNumber:AppDependencies.kt$100</ID>
+    <ID>NewLineAtEndOfFile:Employee.kt$momosetkn.domain.Employee.kt</ID>
+    <ID>NewLineAtEndOfFile:entities.kt$momosetkn.infras.entities.entities.kt</ID>
+    <ID>ReturnCount:Extension.kt$Extension.LoadContext$context(DomaContext) private fun &lt;LOAD_ENTITY, ID_TYPE&gt; selectinloadHasMany( storeEntities: List&lt;STORE_ENTITY&gt;, loadEntity: EntityMetamodel&lt;LOAD_ENTITY&gt;, assocCondition: Pair&lt;PropertyMetamodel&lt;ID_TYPE&gt;, PropertyMetamodel&lt;ID_TYPE&gt;&gt;, store: (STORE_ENTITY, List&lt;LOAD_ENTITY&gt;) -&gt; Unit, ): List&lt;STORE_ENTITY&gt;</ID>
+    <ID>ReturnCount:Extension.kt$Extension.LoadContext$context(DomaContext) private fun &lt;LOAD_ENTITY, ID_TYPE&gt; selectinloadHasOne( storeEntities: List&lt;STORE_ENTITY&gt;, loadEntity: EntityMetamodel&lt;LOAD_ENTITY&gt;, assocCondition: Pair&lt;PropertyMetamodel&lt;ID_TYPE&gt;, PropertyMetamodel&lt;ID_TYPE&gt;&gt;, store: (STORE_ENTITY, LOAD_ENTITY) -&gt; Unit, ): List&lt;STORE_ENTITY&gt;</ID>
+    <ID>UnusedPrivateMember:Extension.kt$Extension.LoadContext$context(DomaContext) private fun &lt;LOAD_ENTITY, ID_TYPE&gt; selectinloadHasOne( storeEntities: List&lt;STORE_ENTITY&gt;, loadEntity: EntityMetamodel&lt;LOAD_ENTITY&gt;, assocCondition: Pair&lt;PropertyMetamodel&lt;ID_TYPE&gt;, PropertyMetamodel&lt;ID_TYPE&gt;&gt;, store: (STORE_ENTITY, LOAD_ENTITY) -&gt; Unit, ): List&lt;STORE_ENTITY&gt;</ID>
+  </CurrentIssues>
+</SmellBaseline>
