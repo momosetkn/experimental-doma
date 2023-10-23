@@ -2,6 +2,7 @@ package momosetkn.infras.repositories
 
 import momosetkn.domain.Company
 import momosetkn.infras.database.doma.contexts.DomaContext
+import momosetkn.infras.entities.Extension
 import momosetkn.infras.entities.Extension.fetchAndSelectinload
 import momosetkn.infras.entities.converter.CompanyConverter.toInfra
 import momosetkn.infras.entities.converter.CompanyConverter.toModel
@@ -14,6 +15,7 @@ import momosetkn.infras.entities.meta.products
 
 class CompaniesRepository {
     context(DomaContext)
+    @OptIn(Extension.ExperimentalApi::class)
     fun findListALL(): List<Company> {
         val items = entityql.from(Meta.companies)
             .fetchAndSelectinload {
