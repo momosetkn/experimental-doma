@@ -73,18 +73,82 @@ dependencies {
 
     // openapi-generator-cli
 //    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
-//    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+//    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0") // FIXME: これをコメントインすると、gradle buildで以下エラー
+    /*
+    momose@momose-B650-PG-Lightning-7950x:~/IdeaProjects/experimental-doma$ gradle clean
+
+BUILD SUCCESSFUL in 276ms
+1 actionable task: 1 executed
+momose@momose-B650-PG-Lightning-7950x:~/IdeaProjects/experimental-doma$ gradle build
+> Task :kaptKotlin FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem was found with the configuration of task ':kaptKotlin' (type 'KaptWithoutKotlincTask').
+  - Gradle detected a problem with the following location: '/home/momose/IdeaProjects/experimental-doma/build/tmp/kapt3/classes/main'.
+
+    Reason: Task ':kspKotlin' uses this output of task ':kaptKotlin' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed.
+
+    Possible solutions:
+      1. Declare task ':kaptKotlin' as an input of ':kspKotlin'.
+      2. Declare an explicit dependency on ':kaptKotlin' from ':kspKotlin' using Task#dependsOn.
+      3. Declare an explicit dependency on ':kaptKotlin' from ':kspKotlin' using Task#mustRunAfter.
+
+    For more information, please refer to https://docs.gradle.org/8.3/userguide/validation_problems.html#implicit_dependency in the Gradle documentation.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 861ms
+5 actionable tasks: 5 executed
+*/
 //    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 //    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     val komapperVersion = "1.14.0"
     platform("org.komapper:komapper-platform:$komapperVersion").let {
         implementation(it)
-        ksp(it)
+//        ksp(it)
     }
     implementation("org.komapper:komapper-starter-jdbc")
     implementation("org.komapper:komapper-dialect-h2-jdbc")
-    ksp("org.komapper:komapper-processor")
+//    ksp("org.komapper:komapper-processor") // FIXME: これとksp(it)をコメントインすると、gradle buildで以下エラー
+    /*
+    momose@momose-B650-PG-Lightning-7950x:~/IdeaProjects/experimental-doma$ gradle clean
+<<-<
+BUILD SUCCESSFUL in 875ms
+1 actionable task: 1 up-to-date
+le momose@momose-B650-PG-Lightning-7950x:~/IdeaProjects/experimental-doma$ gradle build
+> Task :kaptKotlin FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem was found with the configuration of task ':kaptKotlin' (type 'KaptWithoutKotlincTask').
+  - Gradle detected a problem with the following location: '/home/momose/IdeaProjects/experimental-doma/build/tmp/kapt3/classes/main'.
+
+    Reason: Task ':kspKotlin' uses this output of task ':kaptKotlin' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed.
+
+    Possible solutions:
+      1. Declare task ':kaptKotlin' as an input of ':kspKotlin'.
+      2. Declare an explicit dependency on ':kaptKotlin' from ':kspKotlin' using Task#dependsOn.
+      3. Declare an explicit dependency on ':kaptKotlin' from ':kspKotlin' using Task#mustRunAfter.
+
+    For more information, please refer to https://docs.gradle.org/8.3/userguide/validation_problems.html#implicit_dependency in the Gradle documentation.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 845ms
+5 actionable tasks: 5 executed
+*/
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 
