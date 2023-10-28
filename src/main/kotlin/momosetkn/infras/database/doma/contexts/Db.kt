@@ -12,7 +12,7 @@ import javax.sql.DataSource
 
 class Db(
     private val dialect: Dialect,
-    private val hikariDatasource: momosetkn.infras.database.ConnectionPoolDatasource,
+    private val hikariDatasource: DataSource,
     private val jdbcLogger: JdbcLogger,
 ) {
     fun getContext(): DomaContext {

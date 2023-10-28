@@ -5,7 +5,8 @@ import momosetkn.domain.Employee
 import momosetkn.domain.News
 import momosetkn.domain.Product
 import momosetkn.domain.ProductDetail
-import momosetkn.infras.database.ConnectionPoolDatasource
+import momosetkn.infras.database.MainDatasource
+import momosetkn.infras.database.MigrateDatasource
 import momosetkn.infras.database.doma.contexts.Db
 import momosetkn.infras.repositories.CompaniesRepository
 import org.koin.core.module.dsl.factoryOf
@@ -20,10 +21,10 @@ import java.util.*
 
 val infrasDependencies = module {
     // Doma
-    single { Db(get(), get(), get()) }
+    single { Db(get(), MainDatasource(), get()) }
+    single(named("MIGRATE_DB")) { Db(get(), MigrateDatasource(), get()) }
     single<Dialect> { MysqlDialect() }
     single<JdbcLogger> { Slf4jJdbcLogger() }
-    single { ConnectionPoolDatasource() }
 }
 val repositoryDependencies = module {
     single { CompaniesRepository() }

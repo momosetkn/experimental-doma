@@ -2,6 +2,7 @@ package momosetkn.infras.repositories
 
 import org.seasar.doma.Dao
 import org.seasar.doma.Script
+import org.seasar.doma.Select
 import org.seasar.doma.Sql
 
 /**
@@ -83,4 +84,15 @@ select 1
     )
     @Script
     fun switchDb()
+
+    @Sql(
+        """
+select table_name
+from INFORMATION_SCHEMA.TABLES
+where TABLE_SCHEMA = DATABASE()
+  and table_type = 'BASE TABLE'
+"""
+    )
+    @Select
+    fun showTables(): List<String>
 }

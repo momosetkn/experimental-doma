@@ -6,13 +6,12 @@ import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder
 import java.util.concurrent.TimeUnit
 import javax.sql.DataSource
 
-class ConnectionPoolDatasource(
-) : DataSource by momosetkn.infras.database.createHikariDataSource()
+class MainDatasource : DataSource by momosetkn.infras.database.createHikariDataSource()
 
 private fun createHikariDataSource(): DataSource {
     val hikariConfig = HikariConfig().apply {
         driverClassName = "com.mysql.cj.jdbc.Driver"
-        jdbcUrl = "jdbc:mysql://localhost:3316"
+        jdbcUrl = "jdbc:mysql://localhost:3316/"
         username = "root"
         password = ""
         maximumPoolSize = 2
