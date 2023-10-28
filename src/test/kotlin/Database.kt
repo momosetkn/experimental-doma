@@ -1,5 +1,3 @@
-package support.database
-
 import momosetkn.infras.database.doma.contexts.DomaContext
 import momosetkn.infras.database.doma.contexts.DomaContextExtension.getConnection
 import momosetkn.infras.database.doma.contexts.DomaContextExtension.transaction
