@@ -73,9 +73,20 @@ dependencies {
 
     // openapi-generator-cli
 //    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+//    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
 //    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 //    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    val komapperVersion = "1.14.0"
+    platform("org.komapper:komapper-platform:$komapperVersion").let {
+        implementation(it)
+        ksp(it)
+    }
+    implementation("org.komapper:komapper-starter-jdbc")
+    implementation("org.komapper:komapper-dialect-h2-jdbc")
+    ksp("org.komapper:komapper-processor")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 
     // di
     implementation("io.insert-koin:koin-core:$koin_version")
