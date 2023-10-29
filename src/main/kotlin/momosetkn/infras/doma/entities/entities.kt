@@ -16,7 +16,7 @@ data class InfraCompanies(
 
     @Column(name = "updated_by") val updatedBy: String,
     @Column(name = "updated_at") val updatedAt: java.time.LocalDateTime,
-    @Column(name = "created_at") val createdBy: String,
+    @Column(name = "created_by") val createdBy: String,
     @Column(name = "created_at") val createdAt: java.time.LocalDateTime,
 ) {
     @Transient
@@ -38,7 +38,7 @@ data class InfraNews(
 
     @Column(name = "updated_by") val updatedBy: String,
     @Column(name = "updated_at") val updatedAt: java.time.LocalDateTime,
-    @Column(name = "created_at") val createdBy: String,
+    @Column(name = "created_by") val createdBy: String,
     @Column(name = "created_at") val createdAt: java.time.LocalDateTime,
 )
 
@@ -51,7 +51,7 @@ data class InfraProducts(
 
     @Column(name = "updated_by") val updatedBy: String,
     @Column(name = "updated_at") val updatedAt: java.time.LocalDateTime,
-    @Column(name = "created_at") val createdBy: String,
+    @Column(name = "created_by") val createdBy: String,
     @Column(name = "created_at") val createdAt: java.time.LocalDateTime,
 ) {
 
@@ -68,7 +68,7 @@ data class InfraProductDetails(
 
     @Column(name = "updated_by") val updatedBy: String,
     @Column(name = "updated_at") val updatedAt: java.time.LocalDateTime,
-    @Column(name = "created_at") val createdBy: String,
+    @Column(name = "created_by") val createdBy: String,
     @Column(name = "created_at") val createdAt: java.time.LocalDateTime,
 )
 
@@ -81,6 +81,6 @@ data class InfraEmployees(
 
     @Column(name = "updated_by") val updatedBy: String,
     @Column(name = "updated_at") val updatedAt: java.time.LocalDateTime,
-    @Column(name = "created_at") val createdBy: String,
+    @Column(name = "created_by") val createdBy: String,
     @Column(name = "created_at") val createdAt: java.time.LocalDateTime,
 )
