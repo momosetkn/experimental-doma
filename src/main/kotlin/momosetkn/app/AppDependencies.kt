@@ -5,29 +5,30 @@ import momosetkn.domain.Employee
 import momosetkn.domain.News
 import momosetkn.domain.Product
 import momosetkn.domain.ProductDetail
-import momosetkn.infras.database.MainDatasource
-import momosetkn.infras.database.MigrateDatasource
-import momosetkn.infras.database.doma.contexts.Db
-import momosetkn.infras.repositories.CompaniesRepository
+import momosetkn.infras.MainDatasource
+import momosetkn.infras.MigrateDatasource
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import org.seasar.doma.jdbc.JdbcLogger
-import org.seasar.doma.jdbc.dialect.Dialect
-import org.seasar.doma.jdbc.dialect.MysqlDialect
-import org.seasar.doma.jdbc.momosetkn.Slf4jJdbcLogger
 import java.time.LocalDateTime
 import java.util.*
 
 val infrasDependencies = module {
     // Doma
-    single { Db(get(), MainDatasource(), get()) }
-    single(named("MIGRATE_DB")) { Db(get(), MigrateDatasource(), get()) }
-    single<Dialect> { MysqlDialect() }
-    single<JdbcLogger> { Slf4jJdbcLogger() }
+    single { momosetkn.infras.doma.doma.contexts.Db(get(), MainDatasource(), get()) }
+    single(named("MIGRATE_DB")) { momosetkn.infras.doma.doma.contexts.Db(get(), MigrateDatasource(), get()) }
+    single<org.seasar.doma.jdbc.dialect.Dialect> { org.seasar.doma.jdbc.dialect.MysqlDialect() }
+    single<org.seasar.doma.jdbc.JdbcLogger> { org.seasar.doma.jdbc.momosetkn.Slf4jJdbcLogger() }
+    // komapper
+    single { momosetkn.infras.komapper.komapper.contexts.Db(get(), MainDatasource()) }
+    single { get<momosetkn.infras.komapper.komapper.contexts.Db>().jdbcDatabase }
+    single(named("MIGRATE_DB")) { momosetkn.infras.komapper.komapper.contexts.Db(get(), MigrateDatasource()) }
+    single<org.komapper.jdbc.JdbcDialect> { org.komapper.jdbc.JdbcDialects.get("mysql") }
 }
 val repositoryDependencies = module {
-    single { CompaniesRepository() }
+    single { momosetkn.infras.doma.repositories.CompaniesRepository() }
+    single { momosetkn.infras.komapper.repositories.CompaniesRepository(get()) }
+    single { momosetkn.infras.komapper.repositories.DatabaseDao(get()) }
 }
 val dummyDataDependencies = module {
     factory {

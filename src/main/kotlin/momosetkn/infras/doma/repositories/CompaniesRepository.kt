@@ -1,17 +1,17 @@
-package momosetkn.infras.repositories
+package momosetkn.infras.doma.repositories
 
 import momosetkn.domain.Company
-import momosetkn.infras.database.doma.contexts.DomaContext
-import momosetkn.infras.entities.Extension
-import momosetkn.infras.entities.Extension.fetchAndSelectinload
-import momosetkn.infras.entities.converter.CompanyConverter.toInfra
-import momosetkn.infras.entities.converter.CompanyConverter.toModel
-import momosetkn.infras.entities.meta.Meta
-import momosetkn.infras.entities.meta.companies
-import momosetkn.infras.entities.meta.employees
-import momosetkn.infras.entities.meta.news
-import momosetkn.infras.entities.meta.productDetails
-import momosetkn.infras.entities.meta.products
+import momosetkn.infras.doma.doma.contexts.DomaContext
+import momosetkn.infras.doma.entities.Extension
+import momosetkn.infras.doma.entities.Extension.fetchAndSelectinload
+import momosetkn.infras.doma.entities.converter.CompanyConverter.toInfra
+import momosetkn.infras.doma.entities.converter.CompanyConverter.toModel
+import momosetkn.infras.doma.entities.meta.Meta
+import momosetkn.infras.doma.entities.meta.companies
+import momosetkn.infras.doma.entities.meta.employees
+import momosetkn.infras.doma.entities.meta.news
+import momosetkn.infras.doma.entities.meta.productDetails
+import momosetkn.infras.doma.entities.meta.products
 
 class CompaniesRepository {
     context(DomaContext)

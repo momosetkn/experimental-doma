@@ -1,12 +1,12 @@
 @file:Suppress("WildcardImport", "NoWildcardImports")
 
-package momosetkn.infras.entities.meta
+package momosetkn.infras.doma.entities.meta
 
-import momosetkn.infras.entities.InfraCompanies_
-import momosetkn.infras.entities.InfraEmployees_
-import momosetkn.infras.entities.InfraNews_
-import momosetkn.infras.entities.InfraProducts_
-import momosetkn.infras.entities.InfraProductDetails_
+import momosetkn.infras.doma.entities.InfraCompanies_
+import momosetkn.infras.doma.entities.InfraEmployees_
+import momosetkn.infras.doma.entities.InfraNews_
+import momosetkn.infras.doma.entities.InfraProducts_
+import momosetkn.infras.doma.entities.InfraProductDetails_
 
 
 /**

@@ -1,8 +1,8 @@
 package momosetkn.app
 
-import momosetkn.infras.database.doma.contexts.Db
-import momosetkn.infras.database.doma.contexts.transactionWithContext
-import momosetkn.infras.repositories.DatabaseDaoImpl
+import momosetkn.infras.doma.doma.contexts.Db
+import momosetkn.infras.doma.doma.contexts.transactionWithContext
+import momosetkn.infras.doma.repositories.DatabaseDaoImpl
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
 import org.koin.core.qualifier.named

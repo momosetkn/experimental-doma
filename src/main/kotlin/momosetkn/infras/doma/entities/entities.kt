@@ -1,4 +1,4 @@
-package momosetkn.infras.entities
+package momosetkn.infras.doma.entities
 
 import org.seasar.doma.Column
 import org.seasar.doma.Entity

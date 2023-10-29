@@ -87,8 +87,14 @@ dependencies {
         ksp(it)
     }
     implementation("org.komapper:komapper-starter-jdbc")
-    implementation("org.komapper:komapper-dialect-h2-jdbc")
+    implementation("org.komapper:komapper-dialect-mysql-jdbc")
+    implementation("org.komapper:komapper-jdbc")
     ksp("org.komapper:komapper-processor")
+
+    // r2dbc
+//    implementation("org.komapper:komapper-dialect-mysql-r2dbc")
+//    implementation("org.komapper:komapper-r2dbc")
+//    implementation("io.r2dbc:r2dbc-pool")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
@@ -106,6 +112,13 @@ dependencies {
 java {
     sourceCompatibility = JavaVersion.VERSION_20
     targetCompatibility = JavaVersion.VERSION_20
+}
+
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions.freeCompilerArgs += listOf("-opt-in=org.komapper.annotation.KomapperExperimentalAssociation")
+        kotlinOptions.freeCompilerArgs += listOf("-Xcontext-receivers")
+    }
 }
 
 tasks {

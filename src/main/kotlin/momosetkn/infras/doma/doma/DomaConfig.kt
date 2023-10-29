@@ -1,4 +1,4 @@
-package momosetkn.infras.database.doma
+package momosetkn.infras.doma.doma
 
 import org.seasar.doma.jdbc.Config
 import org.seasar.doma.jdbc.JdbcLogger

@@ -1,4 +1,4 @@
-package momosetkn.infras.database
+package momosetkn.infras
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource

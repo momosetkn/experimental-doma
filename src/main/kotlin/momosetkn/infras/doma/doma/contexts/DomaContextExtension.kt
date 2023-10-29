@@ -1,4 +1,4 @@
-package momosetkn.infras.database.doma.contexts
+package momosetkn.infras.doma.doma.contexts
 
 import java.sql.Connection
 

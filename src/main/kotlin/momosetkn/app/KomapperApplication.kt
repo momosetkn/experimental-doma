@@ -1,11 +1,9 @@
 package momosetkn.app
 
 import momosetkn.domain.Company
-import momosetkn.infras.doma.doma.contexts.Db
-import momosetkn.infras.doma.doma.contexts.transactionWithContext
-import momosetkn.infras.doma.repositories.CompaniesRepository
-import momosetkn.infras.doma.repositories.DatabaseDaoImpl
-import org.koin.core.component.KoinComponent
+import momosetkn.infras.komapper.komapper.contexts.Db
+import momosetkn.infras.komapper.repositories.CompaniesRepository
+import momosetkn.infras.komapper.repositories.DatabaseDao
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
 
@@ -22,9 +20,10 @@ fun main(args: Array<String>) {
     startKoin { modules(appDependencies) }
     val db = Koin.get<Db>()
     val companiesRepository = Koin.get<CompaniesRepository>()
+    val databaseDao = Koin.get<DatabaseDao>()
 
-    val list = db.transactionWithContext {
-        DatabaseDaoImpl(domaConfig).switchDb()
+    val list = db.getContext().db.withTransaction {
+        databaseDao.switchDb()
 
         val items = listOf(
             Koin.get<Company>(),

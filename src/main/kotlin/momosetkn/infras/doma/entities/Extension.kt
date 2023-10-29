@@ -1,6 +1,6 @@
-package momosetkn.infras.entities
+package momosetkn.infras.doma.entities
 
-import momosetkn.infras.database.doma.contexts.DomaContext
+import momosetkn.infras.doma.doma.contexts.DomaContext
 import org.seasar.doma.jdbc.criteria.metamodel.EntityMetamodel
 import org.seasar.doma.jdbc.criteria.metamodel.PropertyMetamodel
 import org.seasar.doma.jdbc.criteria.statement.EntityqlSelectStarting

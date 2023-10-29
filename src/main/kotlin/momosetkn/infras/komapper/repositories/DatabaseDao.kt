@@ -1,19 +1,21 @@
-package momosetkn.infras.repositories
+package momosetkn.infras.komapper.repositories
 
-import org.seasar.doma.Dao
-import org.seasar.doma.Script
-import org.seasar.doma.Select
-import org.seasar.doma.Sql
+import org.komapper.core.dsl.QueryDsl
+import org.komapper.core.dsl.query.Query
+import org.komapper.core.dsl.query.bind
+import org.komapper.core.dsl.query.getNotNull
+import org.komapper.jdbc.JdbcDatabase
 
 /**
  * テストで使うもの
  * testディレクトリでは生成できなかったため、ここに置いている
  */
-@Dao
-interface DatabaseDao {
-
-    @Sql(
-        """
+class DatabaseDao(
+    val db: JdbcDatabase,
+) {
+    fun initialize() {
+        val query = QueryDsl.executeScript(
+            """
 create database if not exists test;
 use test;
 
@@ -71,28 +73,36 @@ CREATE TABLE employees (
 );
 
 select 1
-""",
-    )
-    @Script
-    fun initialize()
-
-    @Sql(
-        """
-use test;
-select 1
-""",
-    )
-    @Script
-    fun switchDb()
-
-    @Sql(
-        """
-select table_name
-from INFORMATION_SCHEMA.TABLES
-where TABLE_SCHEMA = DATABASE()
-  and table_type = 'BASE TABLE'
 """
-    )
-    @Select
-    fun showTables(): List<String>
+                .trimIndent(),
+        )
+
+        db.runQuery(query)
+    }
+
+    fun switchDb() {
+        val query = QueryDsl.executeScript(
+            """
+            use test;
+            select 1
+            """.trimIndent(),
+        )
+
+        db.runQuery(query)
+    }
+
+    fun showTables(): List<String> {
+        val query: Query<List<String>> = QueryDsl.fromTemplate(
+            """
+            select table_name
+            from INFORMATION_SCHEMA.TABLES
+            where TABLE_SCHEMA = DATABASE()
+              and table_type = 'BASE TABLE'
+            """.trimIndent(),
+        )
+            .bind("table_name", "table_name")
+            .select { it.getNotNull("table_name") }
+
+        return db.runQuery(query)
+    }
 }

@@ -1,15 +1,15 @@
-package momosetkn.infras.entities.converter
+package momosetkn.infras.doma.entities.converter
 
 import momosetkn.domain.Company
 import momosetkn.domain.Employee
 import momosetkn.domain.News
 import momosetkn.domain.Product
 import momosetkn.domain.ProductDetail
-import momosetkn.infras.entities.InfraCompanies
-import momosetkn.infras.entities.InfraEmployees
-import momosetkn.infras.entities.InfraNews
-import momosetkn.infras.entities.InfraProductDetails
-import momosetkn.infras.entities.InfraProducts
+import momosetkn.infras.doma.entities.InfraCompanies
+import momosetkn.infras.doma.entities.InfraEmployees
+import momosetkn.infras.doma.entities.InfraNews
+import momosetkn.infras.doma.entities.InfraProductDetails
+import momosetkn.infras.doma.entities.InfraProducts
 
 object CompanyConverter {
     fun InfraCompanies.toModel(): Company {

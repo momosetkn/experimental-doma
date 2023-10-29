@@ -1,6 +1,6 @@
-import momosetkn.infras.database.doma.contexts.DomaContext
-import momosetkn.infras.database.doma.contexts.DomaContextExtension.getConnection
-import momosetkn.infras.database.doma.contexts.DomaContextExtension.transaction
+import momosetkn.infras.doma.doma.contexts.DomaContext
+import momosetkn.infras.doma.doma.contexts.DomaContextExtension.getConnection
+import momosetkn.infras.doma.doma.contexts.DomaContextExtension.transaction
 import momosetkn.infras.repositories.DatabaseDaoImpl
 import org.seasar.doma.jdbc.criteria.metamodel.EntityMetamodel
 import org.seasar.doma.jdbc.criteria.metamodel.PropertyMetamodel

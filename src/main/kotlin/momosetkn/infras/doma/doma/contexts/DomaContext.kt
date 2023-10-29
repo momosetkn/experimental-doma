@@ -1,6 +1,6 @@
-package momosetkn.infras.database.doma.contexts
+package momosetkn.infras.doma.doma.contexts
 
-import momosetkn.infras.database.doma.DomaConfig
+import momosetkn.infras.doma.doma.DomaConfig
 import org.seasar.doma.jdbc.criteria.Entityql
 import org.seasar.doma.jdbc.criteria.NativeSql
 import org.seasar.doma.jdbc.tx.TransactionManager
