@@ -15,7 +15,7 @@ object Database {
         "DATABASECHANGELOGLOCK",
     )
 
-    fun <ENTITY> DomaContext.create(meta: EntityMetamodel<ENTITY>, items: List<ENTITY>): List<ENTITY> {
+    fun <ENTITY> DomaContext.createList(meta: EntityMetamodel<ENTITY>, items: List<ENTITY>): List<ENTITY> {
         return transaction {
             entityql.insert(meta, items).execute().entities
         }
