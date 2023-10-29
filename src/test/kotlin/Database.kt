@@ -1,7 +1,7 @@
 import momosetkn.infras.doma.doma.contexts.DomaContext
 import momosetkn.infras.doma.doma.contexts.DomaContextExtension.getConnection
 import momosetkn.infras.doma.doma.contexts.DomaContextExtension.transaction
-import momosetkn.infras.repositories.DatabaseDaoImpl
+import momosetkn.infras.doma.repositories.DatabaseDaoImpl
 import org.seasar.doma.jdbc.criteria.metamodel.EntityMetamodel
 import org.seasar.doma.jdbc.criteria.metamodel.PropertyMetamodel
 import java.lang.reflect.Field
