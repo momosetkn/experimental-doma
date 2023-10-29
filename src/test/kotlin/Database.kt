@@ -4,7 +4,6 @@ import momosetkn.infras.doma.doma.contexts.DomaContextExtension.transaction
 import momosetkn.infras.doma.repositories.DatabaseDaoImpl
 import org.seasar.doma.jdbc.criteria.metamodel.EntityMetamodel
 import org.seasar.doma.jdbc.criteria.metamodel.PropertyMetamodel
-import java.lang.reflect.Field
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
 import kotlin.reflect.full.hasAnnotation
