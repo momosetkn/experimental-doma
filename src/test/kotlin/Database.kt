@@ -7,6 +7,8 @@ import org.seasar.doma.jdbc.criteria.metamodel.PropertyMetamodel
 import java.lang.reflect.Field
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
+import kotlin.reflect.full.hasAnnotation
+import kotlin.reflect.jvm.isAccessible
 
 object Database {
     private val IGNORE_TABLE_LIST = listOf(
@@ -28,14 +30,14 @@ object Database {
     }
 
     fun <ENTITY : Any> DomaContext.reloadList(meta: EntityMetamodel<ENTITY>, items: List<ENTITY>): List<ENTITY> {
-        val propertyMetaToValues = getIdFields(items[0]::class.java).map { field ->
+        val propertyMetaToValues = getIdFields(items[0]::class).map { field ->
 
             val member = requireNotNull(getMemberByName(meta::class, field.name))
             val metaMember = member.call(meta) as PropertyMetamodel<Any>
 
             Pair(
                 metaMember,
-                items.map { field.get(it) },
+                items.map { field.call(it) },
             )
         }
 
@@ -80,9 +82,9 @@ object Database {
         }
     }
 
-    private fun getIdFields(clazz: Class<*>): List<Field> {
-        return clazz.declaredFields.filter { declaredField ->
-            declaredField.getAnnotation(org.seasar.doma.Id::class.java) !== null
+    private fun getIdFields(kclazz: KClass<out Any>): List<KCallable<*>> {
+        return kclazz.members.filter { declaredField ->
+            declaredField.hasAnnotation<org.seasar.doma.Id>()
         }.map {
             it.isAccessible = true
             it
