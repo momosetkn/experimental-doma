@@ -4,6 +4,7 @@ import org.komapper.core.dsl.QueryDsl
 import org.komapper.core.dsl.metamodel.EntityMetamodel
 import org.komapper.core.dsl.metamodel.PropertyMetamodel
 import org.komapper.core.dsl.query.EntitySelectQuery
+import org.komapper.core.dsl.query.Query
 import org.komapper.jdbc.JdbcDatabase
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
@@ -19,14 +20,14 @@ object KomapperDatabase {
 
     fun <ENTITY : Any, ID : Any, META : EntityMetamodel<ENTITY, ID, META>>
         JdbcDatabase.createList(meta: META, items: List<ENTITY>): List<ENTITY> {
-        return runQuery(
+        return exec(
             QueryDsl.insert(meta).batch(items),
         )
     }
 
     fun <ENTITY : Any, ID : Any, META : EntityMetamodel<ENTITY, ID, META>>
         JdbcDatabase.create(meta: META, item: ENTITY): ENTITY {
-        return runQuery(
+        return exec(
             QueryDsl.insert(meta).single(item),
         )
     }
@@ -34,7 +35,6 @@ object KomapperDatabase {
     fun <ENTITY : Any, ID : Any, META : EntityMetamodel<ENTITY, ID, META>>
         JdbcDatabase.reloadList(meta: META, items: List<ENTITY>): List<ENTITY> {
         val propertyMetaToValues = getIdFields(items[0]::class).map { field ->
-
             val member = requireNotNull(getMemberByName(meta::class, field.name))
             val metaMember = member.call(meta) as PropertyMetamodel<ENTITY, Any, Any>
 
@@ -44,17 +44,11 @@ object KomapperDatabase {
             )
         }
 
-        val results = run {
-            var query: EntitySelectQuery<ENTITY> = QueryDsl.from(meta)
-
-            query = propertyMetaToValues.fold(query) { acc, metaToValue ->
-                acc.where { metaToValue.first inList metaToValue.second }
-            }
-
-            query
+        val results = propertyMetaToValues.fold(QueryDsl.from(meta) as EntitySelectQuery<ENTITY>) { acc, metaToValue ->
+            acc.where { metaToValue.first inList metaToValue.second }
         }
 
-        return runQuery(results)
+        return exec(results)
     }
 
     fun <ENTITY : Any, ID : Any, META : EntityMetamodel<ENTITY, ID, META>> JdbcDatabase.reload(
@@ -65,17 +59,17 @@ object KomapperDatabase {
     }
 
     fun <ENTITY : Any, ID : Any, META : EntityMetamodel<ENTITY, ID, META>> JdbcDatabase.all(meta: META): List<ENTITY> {
-        return runQuery {
-            QueryDsl.from(meta)
-        }
+        return exec(QueryDsl.from(meta))
     }
 
     fun JdbcDatabase.reset() {
-        runQuery(QueryDsl.executeScript(("set foreign_key_checks = 0")))
-        DatabaseDao(this).showTables().filter { !IGNORE_TABLE_LIST.contains(it) }.forEach {
-            runQuery(QueryDsl.executeScript(("truncate table $it")))
+        withTransaction {
+            runQuery(QueryDsl.executeScript(("set foreign_key_checks = 0")))
+            DatabaseDao(this).showTables().filter { !IGNORE_TABLE_LIST.contains(it) }.forEach {
+                runQuery(QueryDsl.executeScript(("truncate table $it")))
+            }
+            runQuery(QueryDsl.executeScript("set foreign_key_checks = 1"))
         }
-        runQuery(QueryDsl.executeScript("set foreign_key_checks = 1"))
     }
 
     private fun getIdFields(kclazz: KClass<out Any>): List<KCallable<*>> {
@@ -90,6 +84,12 @@ object KomapperDatabase {
     private fun getMemberByName(kclass: KClass<out Any>, memberName: String): KCallable<*>? {
         return kclass.members.find {
             it.name == memberName
+        }
+    }
+
+    private fun <R> JdbcDatabase.exec(query: Query<R>): R {
+        return withTransaction {
+            runQuery(query)
         }
     }
 }

@@ -1,6 +1,5 @@
-import KomapperDatabase.all
+
 import KomapperDatabase.create
-import KomapperDatabase.createList
 import KomapperDatabase.reload
 import KomapperDatabase.reset
 import io.kotest.core.spec.style.FunSpec
@@ -31,9 +30,7 @@ class KomapperExampleTest : FunSpec({
             createdBy = "createdBy",
             createdAt = java.time.LocalDateTime.of(2021, 1, 1, 1, 1, 2),
         )
-        db.withTransaction {
-            db.create(Meta.infraCompanies, item)
-            db.reload(Meta.infraCompanies, item) shouldBe item
-        }
+        db.create(Meta.infraCompanies, item)
+        db.reload(Meta.infraCompanies, item) shouldBe item
     }
 })
