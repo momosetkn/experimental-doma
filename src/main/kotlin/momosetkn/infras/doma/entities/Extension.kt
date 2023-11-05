@@ -78,7 +78,7 @@ object Extension {
 
             val storeEntityIdCllable: KCallable<ID_TYPE> =
                 storeEntities.getOrNull(0)?.let {
-                    getCallable(it, assocCondition_.first.name) as KCallable<ID_TYPE>
+                    getIdTypeCallable(it, assocCondition_.first.name)
                 } ?: return storeEntities
 
             val loadEntities = run {
@@ -89,7 +89,7 @@ object Extension {
             }
 
             val loadEntityIdCllable: KCallable<ID_TYPE> =
-                loadEntities.getOrNull(0)?.let { getCallable(it, assocCondition_.second.name) as KCallable<ID_TYPE> }
+                loadEntities.getOrNull(0)?.let { getIdTypeCallable(it, assocCondition_.second.name) }
                     ?: return storeEntities
 
             val loadEntitiesMap = loadEntities
@@ -105,7 +105,7 @@ object Extension {
         }
 
         context(DomaContext)
-        private fun <LOAD_ENTITY, ID_TYPE> selectinloadHasOne(
+        private fun <LOAD_ENTITY, ID_TYPE: Any> selectinloadHasOne(
             storeEntities: List<STORE_ENTITY>,
             loadEntity: EntityMetamodel<LOAD_ENTITY>,
             assocCondition: Pair<PropertyMetamodel<ID_TYPE>, PropertyMetamodel<ID_TYPE>>,
@@ -124,7 +124,7 @@ object Extension {
 
             val storeEntityIdCllable: KCallable<ID_TYPE> =
                 storeEntities.getOrNull(0)?.let {
-                    getCallable(it, assocCondition_.first.name) as KCallable<ID_TYPE>
+                    getIdTypeCallable(it, assocCondition_.first.name)
                 } ?: return storeEntities
 
             val loadEntities = run {
@@ -135,7 +135,7 @@ object Extension {
             }
 
             val loadEntityIdCllable: KCallable<ID_TYPE> =
-                loadEntities.getOrNull(0)?.let { getCallable(it, assocCondition_.second.name) as KCallable<ID_TYPE> }
+                loadEntities.getOrNull(0)?.let { getIdTypeCallable(it, assocCondition_.second.name) }
                     ?: return storeEntities
 
             val loadEntitiesMap = loadEntities
@@ -151,10 +151,11 @@ object Extension {
             return storeEntities
         }
 
-        private fun getCallable(entity: Any, memberName: String): KCallable<*>? {
+        @Suppress("UNCHECKED_CAST")
+        private fun <IDTYPE> getIdTypeCallable(entity: Any, memberName: String): KCallable<IDTYPE>? {
             return entity::class.members.find {
                 it.name == memberName
-            } as KCallable<*>?
+            } as KCallable<IDTYPE>?
         }
 
         private fun getPrivateValue(entity: Any, memberName: String): Any? {
