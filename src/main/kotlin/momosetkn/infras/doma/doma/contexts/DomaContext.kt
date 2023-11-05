@@ -4,6 +4,8 @@ import momosetkn.infras.doma.doma.DomaConfig
 import org.seasar.doma.jdbc.criteria.Entityql
 import org.seasar.doma.jdbc.criteria.NativeSql
 import org.seasar.doma.jdbc.tx.TransactionManager
+import org.seasar.doma.kotlin.jdbc.criteria.KEntityql
+import org.seasar.doma.kotlin.jdbc.criteria.KNativeSql
 import javax.sql.DataSource
 
 /**
@@ -23,6 +25,15 @@ open class DomaContext {
             throw NotImplementedError()
         }
     open val nativeSql: NativeSql
+        get() {
+            throw NotImplementedError()
+        }
+
+    open val kentityql: KEntityql
+        get() {
+            throw NotImplementedError()
+        }
+    open val knativeSql: KNativeSql
         get() {
             throw NotImplementedError()
         }

@@ -4,6 +4,7 @@ import momosetkn.domain.Company
 import momosetkn.infras.doma.doma.contexts.DomaContext
 import momosetkn.infras.doma.entities.Extension
 import momosetkn.infras.doma.entities.Extension.fetchAndSelectinload
+import momosetkn.infras.doma.entities.InfraCompanies
 import momosetkn.infras.doma.entities.converter.CompanyConverter.toInfra
 import momosetkn.infras.doma.entities.converter.CompanyConverter.toModel
 import momosetkn.infras.doma.entities.meta.Meta
@@ -12,6 +13,8 @@ import momosetkn.infras.doma.entities.meta.employees
 import momosetkn.infras.doma.entities.meta.news
 import momosetkn.infras.doma.entities.meta.productDetails
 import momosetkn.infras.doma.entities.meta.products
+import org.seasar.doma.kotlin.jdbc.criteria.KEntityql
+import org.seasar.doma.kotlin.jdbc.criteria.statement.KEntityqlSelectStarting
 
 class CompaniesRepository {
     context(DomaContext)
@@ -40,6 +43,12 @@ class CompaniesRepository {
             }
 
         return items.map { it.toModel() }
+    }
+
+    context(DomaContext)
+    @OptIn(Extension.ExperimentalApi::class)
+    fun kfindListALL(): KEntityqlSelectStarting<InfraCompanies> {
+        return kentityql.from(Meta.companies)
     }
 
     context(DomaContext)

@@ -48,6 +48,8 @@ dependencies {
     // doma2
     implementation("org.seasar.doma:doma-core:2.54.0")
     kapt("org.seasar.doma:doma-processor:2.54.0")
+    // https://mvnrepository.com/artifact/org.seasar.doma/doma-kotlin
+    implementation("org.seasar.doma:doma-kotlin:2.54.0")
 
     // connection pool
     implementation("com.zaxxer:HikariCP:5.0.1")
