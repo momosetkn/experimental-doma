@@ -10,7 +10,7 @@ import org.koin.core.qualifier.named
 /**
  * エントリーポイント
  */
-fun main(args: Array<String>) {
+fun main() {
     ConfigureLog.configLog()
 
     val log = getLog()

@@ -68,14 +68,14 @@ class CompaniesRepository(
             .where { Meta.infraNews.companyId inList companiesIds }.includeAll()
         val productsQuery = QueryDsl.from(Meta.infraProducts)
             .where { Meta.infraProducts.companyId inList companiesIds }.includeAll()
-        val productDetailsQuery = QueryDsl.from(Meta.infraProductDetails)
-            .where { Meta.infraProducts.companyId inList companiesIds }.includeAll()
+//        val productDetailsQuery = QueryDsl.from(Meta.infraProductDetails)
+//            .where { Meta.infraProducts.companyId inList companiesIds }.includeAll()
         val employeesQuery = QueryDsl.from(Meta.infraEmployees)
             .where { Meta.infraEmployees.companyId inList companiesIds }.includeAll()
 
         val newsStore = db.runQuery { newsQuery }
         val productsStore = db.runQuery { productsQuery }
-        val productDetailsStore = db.runQuery { productDetailsQuery }
+//        val productDetailsStore = db.runQuery { productDetailsQuery }
         val employeesStore = db.runQuery { employeesQuery }
 
         return companieStore[Meta.infraCompanies].map { company ->

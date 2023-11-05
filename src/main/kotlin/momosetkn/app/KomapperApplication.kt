@@ -10,7 +10,7 @@ import org.koin.core.context.startKoin
 /**
  * エントリーポイント
  */
-fun main(args: Array<String>) {
+fun main() {
     ConfigureLog.configLog()
 
     val log = getLog()
