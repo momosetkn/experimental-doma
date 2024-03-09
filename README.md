@@ -1,4 +1,4 @@
-Doma実験室
+Doma&Komapper実験室
 
 # Setup
 ```bash
