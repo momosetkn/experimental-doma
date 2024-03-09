@@ -47,10 +47,10 @@ dependencies {
     implementation("software.aws.rds:aws-mysql-jdbc:1.1.9")
 
     // doma2
-    implementation("org.seasar.doma:doma-core:2.54.0")
-    kapt("org.seasar.doma:doma-processor:2.54.0")
+    implementation("org.seasar.doma:doma-core:2.56.0")
+    kapt("org.seasar.doma:doma-processor:2.56.0")
     // https://mvnrepository.com/artifact/org.seasar.doma/doma-kotlin
-    implementation("org.seasar.doma:doma-kotlin:2.54.0")
+    implementation("org.seasar.doma:doma-kotlin:2.56.0")
 
     // connection pool
     implementation("com.zaxxer:HikariCP:5.0.1")
@@ -84,7 +84,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
-    val komapperVersion = "1.14.0"
+    val komapperVersion = "1.17.0"
     platform("org.komapper:komapper-platform:$komapperVersion").let {
         implementation(it)
         ksp(it)
