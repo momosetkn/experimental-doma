@@ -107,7 +107,7 @@ class CompaniesRepository(
     }
 
 
-    fun findList_countDistinctMultiple(): List<Pair<String?, Long?>> {
+    fun findIdAndSameCreatorCountList(): List<Pair<String?, Long?>> {
         val metaCompany = Meta.infraCompanies
         val metaSameCreatorCompany = Meta.infraCompanies.clone()
 
