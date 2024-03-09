@@ -98,7 +98,6 @@ class CompaniesRepository(
 
         val mainQuery = QueryDsl.from(metaCompany)
             .select(countDistinct(metaCompany.id))
-        // select (count(distinct t0_.id, t0_.name)) from companies as t0_
 
         val result = db.runQuery {
             mainQuery
