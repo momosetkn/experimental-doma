@@ -18,6 +18,7 @@ plugins {
     id("org.liquibase.gradle") version "2.2.0"
     kotlin("plugin.serialization") version "1.9.10"
     id("io.gitlab.arturbosch.detekt").version("1.23.1")
+    id("org.komapper.gradle") version "1.14.0"
 
     application
 }
@@ -208,4 +209,23 @@ detekt {
     // レポートファイルに出力されるファイルパスのベースとなる
     // これが設定されてないとレポートファイルのパスは絶対パスになる
     basePath = rootDir.absolutePath
+}
+
+// Komapperプラグインに関する設定を行う
+komapper {
+    generators {
+        // 利用するデータベースごとにregisterブロックに適当な名前をつけてブロック内に設定を記述する
+        register("mysql") {
+            jdbc {
+                driver.set("com.mysql.cj.jdbc.Driver")
+                url.set("jdbc:mysql://localhost:3306")
+                user.set("root")
+                password.set("")
+            }
+            packageName.set("org.komapper.example.postgresql")
+            overwriteEntities.set(true)
+            overwriteDefinitions.set(true)
+            useSelfMapping.set(true)
+        }
+    }
 }
