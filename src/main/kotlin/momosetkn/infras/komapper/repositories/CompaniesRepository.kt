@@ -12,6 +12,10 @@ import momosetkn.infras.komapper.entities.infraProducts
 import momosetkn.infras.komapper.entities.products
 import org.komapper.core.dsl.Meta
 import org.komapper.core.dsl.QueryDsl
+import org.komapper.core.dsl.expression.ColumnExpression
+import org.komapper.core.dsl.expression.Operand
+import org.komapper.core.dsl.operator.columnExpression
+import org.komapper.core.dsl.operator.countDistinct
 import org.komapper.jdbc.JdbcDatabase
 
 class CompaniesRepository(
@@ -87,6 +91,61 @@ class CompaniesRepository(
                 employees = company.infraEmployees(employeesStore).toList(),
             )
         }
+    }
+
+    fun findList_countDistinct(): Long? {
+        val metaCompany = Meta.infraCompanies
+
+        val mainQuery = QueryDsl.from(metaCompany)
+            .select(countDistinct(metaCompany.id))
+        // select (count(distinct t0_.id, t0_.name)) from companies as t0_
+
+        val result = db.runQuery {
+            mainQuery
+        }
+
+        return result
+    }
+
+
+    fun findList_countDistinctMultiple(): List<Pair<String?, Long?>> {
+        val metaCompany = Meta.infraCompanies
+        val metaSameCreatorCompany = Meta.infraCompanies.clone()
+
+        fun countDistinctMultiple(
+            vararg expressions: ColumnExpression<*, *>,
+        ): ColumnExpression<Long, *> {
+            val name = "countDistinct"
+            val columns = expressions.map { Operand.Column(it) }
+            return columnExpression(Long::class, name, columns) {
+                // for MySQL
+                append("count(distinct ")
+//                append("count(distinct (") // for PostgreSQL
+                columns.forEach {
+                    visit(it)
+                    append(", ")
+                }
+                cutBack(2)
+                append(")")
+//                append("))") // for PostgreSQL
+            }
+        }
+
+        // get same creator companies count
+        val mainQuery = QueryDsl.from(metaCompany)
+            .leftJoin(metaSameCreatorCompany) {
+                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
+            }
+            .groupBy(metaCompany.id)
+            .select(metaCompany.id, countDistinctMultiple(metaCompany.id, metaSameCreatorCompany.id))
+        // select t0_.id, (count(distinct t0_.id, t1_.id))
+        // from companies as t0_ left outer join companies as t1_ on (t0_.created_by = t1_.created_by) group by t0_.id
+
+        val result = db.runQuery {
+            mainQuery
+        }
+
+        return result
     }
 
     fun createList(companies: List<Company>) {

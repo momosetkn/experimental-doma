@@ -3,6 +3,8 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ForbiddenComment:Log.kt$// FIXME: Don't rely on bad hacks like this.</ID>
+    <ID>FunctionNaming:CompaniesRepository.kt$CompaniesRepository$fun findList_countDistinct(): Long?</ID>
+    <ID>FunctionNaming:CompaniesRepository.kt$CompaniesRepository$fun findList_countDistinctMultiple(): List&lt;Pair&lt;String?, Long?&gt;&gt;</ID>
     <ID>InvalidPackageDeclaration:KotestSupport.kt$package support</ID>
     <ID>LongMethod:DatabaseDao.kt$DatabaseDao$fun initialize()</ID>
     <ID>MagicNumber:AppDependencies.kt$100</ID>
