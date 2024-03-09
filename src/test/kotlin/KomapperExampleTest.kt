@@ -14,8 +14,6 @@ import org.koin.core.context.startKoin
 import org.komapper.core.dsl.Meta
 
 class KomapperExampleTest : FunSpec({
-    startKoin { modules(appDependencies) }
-
     val db = Koin.get<Db>().jdbcDatabase
 
     beforeEach {

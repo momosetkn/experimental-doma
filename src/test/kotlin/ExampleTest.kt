@@ -13,8 +13,6 @@ import org.koin.core.component.get
 import org.koin.core.context.startKoin
 
 class ExampleTest : FunSpec({
-    startKoin { modules(appDependencies) }
-
     val db = Koin.get<Db>()
     val context = db.getContext()
 
