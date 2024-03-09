@@ -93,7 +93,7 @@ class CompaniesRepository(
         }
     }
 
-    fun findList_countDistinct(): Long? {
+    fun find_countDistinct(): Long? {
         val metaCompany = Meta.infraCompanies
 
         val mainQuery = QueryDsl.from(metaCompany)
