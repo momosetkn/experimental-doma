@@ -8,6 +8,8 @@ import org.seasar.doma.jdbc.dialect.Dialect
 import org.seasar.doma.jdbc.tx.LocalTransactionDataSource
 import org.seasar.doma.jdbc.tx.LocalTransactionManager
 import org.seasar.doma.jdbc.tx.TransactionManager
+import org.seasar.doma.kotlin.jdbc.criteria.KEntityql
+import org.seasar.doma.kotlin.jdbc.criteria.KNativeSql
 import javax.sql.DataSource
 
 class Db(
@@ -24,7 +26,9 @@ class Db(
             tx = transactionManager,
             domaConfig = domaConfig,
             entityql = Entityql(domaConfig),
+            kentityql = KEntityql(domaConfig),
             nativeSql = NativeSql(domaConfig),
+            knativeSql = KNativeSql(domaConfig),
             datasource = ltds
         )
     }
@@ -43,6 +47,8 @@ data class MyDomaContext(
     override val tx: TransactionManager,
     override val domaConfig: DomaConfig,
     override val entityql: Entityql,
+    override val kentityql: KEntityql,
     override val nativeSql: NativeSql,
+    override val knativeSql: KNativeSql,
     override val datasource: DataSource,
 ) : DomaContext()
