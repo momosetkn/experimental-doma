@@ -19,6 +19,7 @@ plugins {
     kotlin("plugin.serialization") version "1.9.10"
     id("io.gitlab.arturbosch.detekt").version("1.23.1")
     id("org.komapper.gradle") version "1.14.0"
+    id("org.domaframework.doma.codegen") version "2.0.0"
 
     application
 }
@@ -227,5 +228,39 @@ komapper {
             overwriteDefinitions.set(true)
             useSelfMapping.set(true)
         }
+    }
+}
+
+domaCodeGen {
+    register("kotlin") {
+        url = "jdbc:mysql://localhost:3316"
+        user = "root"
+        password = ""
+
+        languageType = org.seasar.doma.gradle.codegen.desc.LanguageType.KOTLIN
+        templateDir = file("src/main/resources/doma_codegen_template/kotlin")
+        entity {
+            packageName = "momosetkn.infra.doma.kotlin._entites"
+            useListener = false
+            useMappedSuperclass = false
+        }
+//        dao {
+//            packageName.set("org.example.dao")
+//        }
+    }
+    register("java") {
+        url = "jdbc:mysql://localhost:3316"
+        user = "root"
+        password = ""
+        languageType = org.seasar.doma.gradle.codegen.desc.LanguageType.JAVA
+        templateDir = file("src/main/resources/doma_codegen_template/java")
+        entity {
+            packageName = "momosetkn.infra.doma.java._entites"
+            useListener = false
+            useMappedSuperclass = false
+        }
+//        dao {
+//            packageName.set("org.example.dao")
+//        }
     }
 }
