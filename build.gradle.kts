@@ -232,6 +232,13 @@ komapper {
     }
 }
 
+/**
+ * https://github.com/domaframework/doma-codegen-plugin/blob/fc026b9b1fba43952f6b498d5eb3962909428fad/codegen/src/main/java/org/seasar/doma/gradle/codegen/desc/KotlinClassResolver.java
+ * https://github.com/domaframework/doma-codegen-plugin/blob/d2b67e04f9b42f4db265105e660211e36970a407/codegen/src/main/java/org/seasar/doma/gradle/codegen/desc/EntityPropertyDescFactory.java#L139
+ *
+ * doma-codegen-pluginで、StringやLocalDateTimeがすべてnullable扱いになるのはなぜ…と思ったら、KotlinClassResolverで未定義はデフォルト値を"null"としていて、デフォルト値が"null"もnullableと判定する挙動のよう…
+ * それの回避として、"null"以外のデフォルト値をダミーで設定する
+ */
 class MyKotlinClassResolver : org.seasar.doma.gradle.codegen.desc.LanguageClassResolver {
     override fun resolve(
         javaClassName: String,
