@@ -232,6 +232,7 @@ komapper {
 }
 
 domaCodeGen {
+    // gradle domaCodeGenKotlinEntity
     register("kotlin") {
         url = "jdbc:mysql://localhost:3316"
         user = "root"
@@ -248,6 +249,7 @@ domaCodeGen {
 //            packageName.set("org.example.dao")
 //        }
     }
+    // gradle domaCodeGenJavaEntity
     register("java") {
         url = "jdbc:mysql://localhost:3316"
         user = "root"
