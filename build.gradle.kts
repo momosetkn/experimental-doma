@@ -52,6 +52,7 @@ dependencies {
     kapt("org.seasar.doma:doma-processor:2.56.0")
     // https://mvnrepository.com/artifact/org.seasar.doma/doma-kotlin
     implementation("org.seasar.doma:doma-kotlin:2.56.0")
+    implementation("org.domaframework.doma.codegen:2.0.0")
 
     // connection pool
     implementation("com.zaxxer:HikariCP:5.0.1")
@@ -231,6 +232,13 @@ komapper {
     }
 }
 
+class MyKotlinClassResolver : org.seasar.doma.gradle.codegen.desc.LanguageClassResolver {
+    override fun resolve(
+        javaClassName: String,
+        columnMeta: org.seasar.doma.gradle.codegen.meta.ColumnMeta
+    ) = org.seasar.doma.gradle.codegen.desc.LanguageClass(javaClassName, "// NOT_USE_DEFAULT_VALUE")
+}
+
 domaCodeGen {
     // gradle domaCodeGenKotlinEntity
     register("kotlin") {
@@ -240,6 +248,7 @@ domaCodeGen {
 
         languageType = org.seasar.doma.gradle.codegen.desc.LanguageType.KOTLIN
         templateDir = file("src/main/resources/doma_codegen_template/kotlin")
+        languageClassResolver = MyKotlinClassResolver()
         entity {
             packageName = "momosetkn.infra.doma.kotlin._entites"
             useListener = false

@@ -46,7 +46,7 @@ data class <#if entityPrefix??>${entityPrefix}</#if>${simpleName}<#if entitySuff
 <#if property.showColumnName && property.columnName??>
     @Column(name = "${property.columnName}")
 </#if>
-    val ${property.name}: ${property.languageClassSimpleName}<#if property.nullable>?</#if> = ${property.defaultValue}<#if property_has_next || originalStatesPropertyName??>,</#if>
+    val ${property.name}: ${property.languageClassSimpleName}<#if property.nullable>?</#if><#if property_has_next || originalStatesPropertyName??>,</#if>
 </#list>
 <#if originalStatesPropertyName??>
 
