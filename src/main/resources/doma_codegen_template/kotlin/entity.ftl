@@ -26,7 +26,7 @@ import ${importName}
 data class <#if entityPrefix??>${entityPrefix}</#if>${simpleName}<#if entitySuffix??>${entitySuffix}</#if>(
 <#list ownEntityPropertyDescs as property>
 
-<#if showDbComment && property.comment??>
+<#if showDbComment && property.comment?? && property.comment?length != 0 >
     /** ${property.comment} */
 </#if>
 <#if property.id>
