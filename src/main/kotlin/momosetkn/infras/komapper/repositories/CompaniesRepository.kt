@@ -1,6 +1,7 @@
 package momosetkn.infras.komapper.repositories
 
 import momosetkn.domain.Company
+import momosetkn.infras.komapper.entities.InfraCompanies
 import momosetkn.infras.komapper.entities.converter.CompanyConverter.toInfra
 import momosetkn.infras.komapper.entities.converter.CompanyConverter.toModel
 import momosetkn.infras.komapper.entities.converter.CompanyConverter.toModels
@@ -12,11 +13,18 @@ import momosetkn.infras.komapper.entities.infraProducts
 import momosetkn.infras.komapper.entities.products
 import org.komapper.core.dsl.Meta
 import org.komapper.core.dsl.QueryDsl
+import org.komapper.core.dsl.context.SelectContext
+import org.komapper.core.dsl.element.Relationship
 import org.komapper.core.dsl.expression.ColumnExpression
+import org.komapper.core.dsl.expression.OnDeclaration
 import org.komapper.core.dsl.expression.Operand
+import org.komapper.core.dsl.metamodel.EntityMetamodel
 import org.komapper.core.dsl.operator.columnExpression
 import org.komapper.core.dsl.operator.countDistinct
+import org.komapper.core.dsl.query.EntitySelectQuery
+import org.komapper.core.dsl.scope.FilterScope
 import org.komapper.jdbc.JdbcDatabase
+import java.time.LocalDateTime
 
 class CompaniesRepository(
     private val db: JdbcDatabase,
@@ -130,13 +138,141 @@ class CompaniesRepository(
             }
         }
 
+        fun <ENTITY2 : Any, ID2 : Any, META2 : EntityMetamodel<ENTITY2, ID2, META2>> EntitySelectQuery<ENTITY2>.ensureLeftJoin(
+            metamodel: META2,
+            on: OnDeclaration,
+        ): EntitySelectQuery<ENTITY2> {
+            val joins = (this.context as SelectContext<*, *, *>).joins
+            return if (joins.find { it.target == metamodel } != null) {
+                this
+            } else {
+                leftJoin(Relationship(metamodel, on))
+            }
+        }
+
         // get same creator companies count
         val mainQuery = QueryDsl.from(metaCompany)
             .leftJoin(metaSameCreatorCompany) {
                 metaCompany.createdBy eq metaSameCreatorCompany.createdBy
             }
+            .ensureLeftJoin(metaSameCreatorCompany) {
+                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
+            }
             .groupBy(metaCompany.id)
             .select(metaCompany.id, countDistinctMultiple(metaCompany.id, metaSameCreatorCompany.id))
+
+
+        val mainQuery2 = QueryDsl.from(metaCompany)
+            .ensureLeftJoin(metaSameCreatorCompany) {
+                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
+            }
+            .ensureLeftJoin(metaSameCreatorCompany) {
+                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
+            }
+            .groupBy(metaCompany.id)
+            .select(metaCompany.id, countDistinctMultiple(metaCompany.id, metaSameCreatorCompany.id))
+
+        println(mainQuery2)
+        // select t0_.id, (count(distinct t0_.id, t1_.id))
+        // from companies as t0_ left outer join companies as t1_ on (t0_.created_by = t1_.created_by) group by t0_.id
+
+        val result = db.runQuery {
+            mainQuery
+        }
+
+        return result
+    }
+
+    fun findIdAndSameCreatorCountList2(
+        fromTo: Pair<LocalDateTime?, LocalDateTime?>,
+    ): List<InfraCompanies> {
+        val metaCompany = Meta.infraCompanies
+        val metaSameCreatorCompany = Meta.infraCompanies.clone()
+
+        class ConditionExtension<F : FilterScope<F>>(
+            val filterScope: FilterScope<F>
+        ) {
+            infix fun <T : Comparable<T>, S : Any> ColumnExpression<T, S>.range(
+                fromTo: Pair<T?, T?>,
+            ) {
+                val column = this
+                val from = fromTo.first
+                val to = fromTo.second
+                return with(filterScope) {
+                    if (from != null && to == null) {
+                        column greaterEq from
+                    } else if (from == null && to != null) {
+                        column lessEq to
+                    } else if (from != null && to != null) {
+                        column between from..to
+                    }
+                }
+            }
+
+            infix fun <T : Any, S : Any> ColumnExpression<T, S>.notInIfNotEmpty(
+                values: List<T>
+            ) {
+                val column = this
+                return with(filterScope) {
+                    if (values.isNotEmpty()) {
+                        column notInList values
+                    }
+                }
+            }
+
+            infix fun <T : Any, S : Any> ColumnExpression<T, S>.inOrIsNull(
+                values: List<T>,
+            ) {
+                val column = this
+                this.orIsNull(values) {
+                    column inList it
+                }
+            }
+
+            fun <T : Any, S : Any> ColumnExpression<T, S>.orIsNull(
+                values: List<T?>,
+                orDeclaration: FilterScope<F>.(List<T>) -> Unit,
+            ) {
+                val column = this
+                return with(filterScope) {
+                    val (nonNullItems, nullItems) = values
+                        .distinct()
+                        .partition { it != null }
+                    and {
+                        if (nullItems.isNotEmpty()) {
+                            or {
+                                column.isNull()
+                            }
+                        }
+                        if (nonNullItems.isNotEmpty()) {
+                            or {
+                                orDeclaration(nonNullItems as List<T>)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        fun FilterScope<*>.conditionExtension(
+            block: ConditionExtension<*>.() -> Unit,
+        ) {
+            ConditionExtension(this).apply {
+                block()
+            }
+        }
+
+        // get same creator companies count
+        val mainQuery = QueryDsl.from(metaCompany)
+            .leftJoin(metaSameCreatorCompany) {
+                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
+            }
+            .where {
+                conditionExtension {
+                    metaCompany.createdAt range fromTo
+                }
+            }
+            .groupBy(metaCompany.id)
         // select t0_.id, (count(distinct t0_.id, t1_.id))
         // from companies as t0_ left outer join companies as t1_ on (t0_.created_by = t1_.created_by) group by t0_.id
 
