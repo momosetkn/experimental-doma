@@ -2,14 +2,17 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>CyclomaticComplexMethod:CompaniesRepository.kt$CompaniesRepository$fun findIdAndSameCreatorCountList2( fromTo: Pair&lt;LocalDateTime?, LocalDateTime?&gt;, ): List&lt;InfraCompanies&gt;</ID>
     <ID>ForbiddenComment:Log.kt$// FIXME: Don't rely on bad hacks like this.</ID>
-    <ID>FunctionNaming:CompaniesRepository.kt$CompaniesRepository$fun findList_countDistinct(): Long?</ID>
-    <ID>FunctionNaming:CompaniesRepository.kt$CompaniesRepository$fun findList_countDistinctMultiple(): List&lt;Pair&lt;String?, Long?&gt;&gt;</ID>
+    <ID>FunctionNaming:CompaniesRepository.kt$CompaniesRepository$context(DomaContext) @OptIn(Extension.ExperimentalApi::class) fun findListALL_JavaRecord(): List&lt;InfraCompaniesJavaRecord&gt;</ID>
+    <ID>FunctionNaming:CompaniesRepository.kt$CompaniesRepository$context(DomaContext) @OptIn(Extension.ExperimentalApi::class) fun insert_JavaRecord(items: List&lt;InfraCompaniesJavaRecord&gt;)</ID>
+    <ID>FunctionNaming:CompaniesRepository.kt$CompaniesRepository$fun find_countDistinct(): Long?</ID>
     <ID>InvalidPackageDeclaration:KotestSupport.kt$package support</ID>
     <ID>LongMethod:DatabaseDao.kt$DatabaseDao$fun initialize()</ID>
     <ID>MagicNumber:AppDependencies.kt$100</ID>
     <ID>MatchingDeclarationName:DomaContext.kt$KomapperContext</ID>
     <ID>MatchingDeclarationName:KotestSupport.kt$KotestProjectConfig : AbstractProjectConfig</ID>
+    <ID>MaxLineLength:CompaniesRepository.kt$CompaniesRepository$fun</ID>
     <ID>NewLineAtEndOfFile:Employee.kt$momosetkn.domain.Employee.kt</ID>
     <ID>NewLineAtEndOfFile:entities.kt$momosetkn.infras.doma.entities.entities.kt</ID>
     <ID>ReturnCount:Extension.kt$Extension.LoadContext$context(DomaContext) private fun &lt;LOAD_ENTITY, ID_TYPE: Any&gt; selectinloadHasOne( storeEntities: List&lt;STORE_ENTITY&gt;, loadEntity: EntityMetamodel&lt;LOAD_ENTITY&gt;, assocCondition: Pair&lt;PropertyMetamodel&lt;ID_TYPE&gt;, PropertyMetamodel&lt;ID_TYPE&gt;&gt;, store: (STORE_ENTITY, LOAD_ENTITY) -&gt; Unit, ): List&lt;STORE_ENTITY&gt;</ID>

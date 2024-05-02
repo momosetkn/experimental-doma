@@ -4,6 +4,7 @@ import momosetkn.infras.doma.doma.contexts.DomaContextExtension.transaction
 import momosetkn.infras.doma.repositories.DatabaseDaoImpl
 import org.seasar.doma.jdbc.criteria.metamodel.EntityMetamodel
 import org.seasar.doma.jdbc.criteria.metamodel.PropertyMetamodel
+import java.lang.reflect.Field
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
 import kotlin.reflect.full.hasAnnotation
@@ -36,7 +37,7 @@ object Database {
 
             Pair(
                 metaMember,
-                items.map { field.call(it) },
+                items.map { field.get(it) },
             )
         }
 
@@ -81,9 +82,9 @@ object Database {
         }
     }
 
-    private fun getIdFields(kclazz: KClass<out Any>): List<KCallable<*>> {
-        return kclazz.members.filter { declaredField ->
-            declaredField.hasAnnotation<org.seasar.doma.Id>()
+    private fun getIdFields(kclazz: KClass<out Any>): List<Field> {
+        return kclazz.java.declaredFields.filter { declaredField ->
+            declaredField.getAnnotation(org.seasar.doma.Id::class.java) !== null
         }.map {
             it.isAccessible = true
             it

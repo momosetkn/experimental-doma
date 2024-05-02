@@ -36,6 +36,9 @@ repositories {
 }
 
 dependencies {
+    // reflection
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}")
+
     // test
     testImplementation(kotlin("test"))
     testImplementation("io.kotest:kotest-framework-engine-jvm:$kotest_version")
