@@ -158,21 +158,18 @@ class CompaniesRepository(
             .ensureLeftJoin(metaSameCreatorCompany) {
                 metaCompany.createdBy eq metaSameCreatorCompany.createdBy
             }
-            .groupBy(metaCompany.id)
-            .select(metaCompany.id, countDistinctMultiple(metaCompany.id, metaSameCreatorCompany.id))
-
-
-        val mainQuery2 = QueryDsl.from(metaCompany)
-            .ensureLeftJoin(metaSameCreatorCompany) {
+            .ensureLeftJoin(metaSameCreatorCompany) { // if repeat same leftJoin, it will be ignored
                 metaCompany.createdBy eq metaSameCreatorCompany.createdBy
             }
             .ensureLeftJoin(metaSameCreatorCompany) {
-                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
+                metaCompany.createdAt eq metaSameCreatorCompany.createdAt
+            }
+            .ensureLeftJoin(metaSameCreatorCompany) {
+                metaCompany.name eq metaSameCreatorCompany.name
             }
             .groupBy(metaCompany.id)
             .select(metaCompany.id, countDistinctMultiple(metaCompany.id, metaSameCreatorCompany.id))
 
-        println(mainQuery2)
         // select t0_.id, (count(distinct t0_.id, t1_.id))
         // from companies as t0_ left outer join companies as t1_ on (t0_.created_by = t1_.created_by) group by t0_.id
 
