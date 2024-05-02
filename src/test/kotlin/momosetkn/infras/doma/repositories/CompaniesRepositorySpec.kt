@@ -1,5 +1,6 @@
 package momosetkn.infras.doma.repositories
 
+import Database.reset
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import momosetkn.app.Koin
@@ -11,10 +12,14 @@ import java.time.LocalDateTime
 
 class CompaniesRepositorySpec : FunSpec({
     val subject = CompaniesRepository()
+    val db = Koin.get<Db>()
+    val context = db.getContext()
+
+    beforeEach {
+        context.reset()
+    }
     context("kfindListALLJavaRecord") {
         test("should return list of companies") {
-            val db = Koin.get<Db>()
-
             db.transactionWithContext {
                 val list = listOf(
                     InfraCompaniesJavaRecord("1", "name1",
