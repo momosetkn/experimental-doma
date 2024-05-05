@@ -1,7 +1,9 @@
 package momosetkn.infras.komapper.repositories
 
+import momosetkn.applyIf
 import momosetkn.domain.Company
 import momosetkn.infras.komapper.entities.InfraCompanies
+import momosetkn.infras.komapper.entities._InfraCompanies
 import momosetkn.infras.komapper.entities.converter.CompanyConverter.toInfra
 import momosetkn.infras.komapper.entities.converter.CompanyConverter.toModel
 import momosetkn.infras.komapper.entities.converter.CompanyConverter.toModels
@@ -22,6 +24,7 @@ import org.komapper.core.dsl.metamodel.EntityMetamodel
 import org.komapper.core.dsl.operator.columnExpression
 import org.komapper.core.dsl.operator.countDistinct
 import org.komapper.core.dsl.query.EntitySelectQuery
+import org.komapper.core.dsl.query.SelectQueryBuilder
 import org.komapper.core.dsl.scope.FilterScope
 import org.komapper.jdbc.JdbcDatabase
 import java.time.LocalDateTime
@@ -115,7 +118,9 @@ class CompaniesRepository(
     }
 
 
-    fun findIdAndSameCreatorCountList(): List<Pair<String?, Long?>> {
+    fun findIdAndSameCreatorCountList(
+        sameCreator: Boolean = false,
+    ): List<Pair<String?, Long?>> {
         val metaCompany = Meta.infraCompanies
         val metaSameCreatorCompany = Meta.infraCompanies.clone()
 
@@ -150,23 +155,26 @@ class CompaniesRepository(
             }
         }
 
+        fun SelectQueryBuilder<InfraCompanies, String, _InfraCompanies>.ensureLeftJoinCompany(
+            metaSameCreatorCompany: _InfraCompanies,
+            metaCompany: _InfraCompanies
+        ) = ensureLeftJoin(metaSameCreatorCompany) {
+            metaCompany.createdBy eq metaSameCreatorCompany.createdBy
+        }
+
+        fun SelectQueryBuilder<InfraCompanies, String, _InfraCompanies>.filterBySameCreator(
+            sameCreator: Boolean,
+            metaSameCreatorCompany: _InfraCompanies,
+            metaCompany: _InfraCompanies
+        ) = applyIf(sameCreator) {
+            ensureLeftJoinCompany(metaSameCreatorCompany, metaCompany).where {
+                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
+            }
+        }
+
         // get same creator companies count
         val mainQuery = QueryDsl.from(metaCompany)
-            .leftJoin(metaSameCreatorCompany) {
-                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
-            }
-            .ensureLeftJoin(metaSameCreatorCompany) {
-                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
-            }
-            .ensureLeftJoin(metaSameCreatorCompany) { // if repeat same leftJoin, it will be ignored
-                metaCompany.createdBy eq metaSameCreatorCompany.createdBy
-            }
-            .ensureLeftJoin(metaSameCreatorCompany) {
-                metaCompany.createdAt eq metaSameCreatorCompany.createdAt
-            }
-            .ensureLeftJoin(metaSameCreatorCompany) {
-                metaCompany.name eq metaSameCreatorCompany.name
-            }
+            .filterBySameCreator(sameCreator, metaSameCreatorCompany, metaCompany)
             .groupBy(metaCompany.id)
             .select(metaCompany.id, countDistinctMultiple(metaCompany.id, metaSameCreatorCompany.id))
 
