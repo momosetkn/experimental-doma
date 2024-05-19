@@ -126,7 +126,7 @@ class CompaniesRepository(
 
         fun countDistinctMultiple(
             vararg expressions: ColumnExpression<*, *>,
-        ): ColumnExpression<Long, *> {
+        ): ColumnExpression<Long, Long> {
             val name = "countDistinct"
             val columns = expressions.map { Operand.Column(it) }
             return columnExpression(Long::class, name, columns) {
