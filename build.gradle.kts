@@ -7,7 +7,7 @@ val mockk_version: String by project
 val detekt_version: String by project
 
 plugins {
-    kotlin("jvm") version "1.9.10"
+    kotlin("jvm") version "1.9.23"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
     // annotation
