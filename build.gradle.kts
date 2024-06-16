@@ -10,16 +10,16 @@ val detekt_version: String by project
 val testcontainersVersion: String by project
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "1.9.24"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 
     // annotation
     // https://github.com/google/ksp/issues/1445#issuecomment-1763422067
-    id("com.google.devtools.ksp") version "1.9.10-1.0.13"
-    kotlin("kapt") version "1.9.10"
+    id("com.google.devtools.ksp") version "1.9.24-1.0.20"
+    kotlin("kapt") version "1.9.24"
 
     id("org.liquibase.gradle") version "2.2.0"
-    kotlin("plugin.serialization") version "1.9.10"
+    kotlin("plugin.serialization") version "1.9.24"
     id("io.gitlab.arturbosch.detekt").version("1.23.6")
     id("org.komapper.gradle") version "1.14.0"
     id("org.domaframework.doma.codegen") version "2.0.0"
