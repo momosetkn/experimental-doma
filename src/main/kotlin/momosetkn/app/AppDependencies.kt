@@ -15,15 +15,33 @@ import java.util.*
 
 val infrasDependencies = module {
     // Doma
-    single { momosetkn.infras.doma.doma.contexts.Db(get(), MainDatasource(), get()) }
-    single(named("MIGRATE_DB")) { momosetkn.infras.doma.doma.contexts.Db(get(), MigrateDatasource(), get()) }
+    single {
+        MainDatasource(get(named("JDBC_URL")))
+    }
+    single {
+        MigrateDatasource(get(named("JDBC_URL")))
+    }
+    single {
+        momosetkn.infras.doma.doma.contexts.Db(get(), get<MigrateDatasource>(), get())
+    }
     single<org.seasar.doma.jdbc.dialect.Dialect> { org.seasar.doma.jdbc.dialect.MysqlDialect() }
     single<org.seasar.doma.jdbc.JdbcLogger> { org.seasar.doma.jdbc.momosetkn.Slf4jJdbcLogger() }
     // komapper
-    single { momosetkn.infras.komapper.komapper.contexts.Db(get(), MainDatasource()) }
+    single { momosetkn.infras.komapper.komapper.contexts.Db(get(), get<MainDatasource>()) }
     single { get<momosetkn.infras.komapper.komapper.contexts.Db>().jdbcDatabase }
-    single(named("MIGRATE_DB")) { momosetkn.infras.komapper.komapper.contexts.Db(get(), MigrateDatasource()) }
+    single {
+        momosetkn.infras.komapper.komapper.contexts.Db(get(), get<MigrateDatasource>())
+    }
     single<org.komapper.jdbc.JdbcDialect> { org.komapper.jdbc.JdbcDialects.get("mysql") }
+    single {
+        momosetkn.MySQL().apply {
+            start()
+        }
+    }
+    single(named("JDBC_URL")) {
+        val mysql = get<momosetkn.MySQL>()
+        mysql.jdbcUrl!!
+    }
 }
 val repositoryDependencies = module {
     single { momosetkn.infras.doma.repositories.CompaniesRepository() }

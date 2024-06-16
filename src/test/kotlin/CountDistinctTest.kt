@@ -65,7 +65,7 @@ class CountDistinctTest : FunSpec({
     }
     context("#countDistinctMultiple") {
         test("createdByが同じ会社が何件あるかの件数が、行毎に付与されること") {
-            val actual = companiesRepository.findIdAndSameCreatorCountList()
+            val actual = companiesRepository.findIdAndSameCreatorCountList(true)
             actual shouldBe listOf(
                 "0" to 2L,
                 "1" to 2L,

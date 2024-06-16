@@ -5,6 +5,7 @@ val kotest_version: String by project
 val jackson_version: String by project
 val mockk_version: String by project
 val detekt_version: String by project
+val testcontainersVersion: String by project
 
 plugins {
     kotlin("jvm") version "1.9.23"
@@ -17,7 +18,7 @@ plugins {
 
     id("org.liquibase.gradle") version "2.2.0"
     kotlin("plugin.serialization") version "1.9.10"
-    id("io.gitlab.arturbosch.detekt").version("1.23.1")
+    id("io.gitlab.arturbosch.detekt").version("1.23.6")
     id("org.komapper.gradle") version "1.14.0"
     id("org.domaframework.doma.codegen") version "2.0.0"
 
@@ -115,6 +116,10 @@ dependencies {
         // https://github.com/InsertKoinIO/koin/issues/1526
         exclude("org.jetbrains.kotlin", "kotlin-test-junit")
     }
+
+    // testcontainers
+    implementation("org.testcontainers:testcontainers:${testcontainersVersion}")
+    implementation("org.testcontainers:mysql:${testcontainersVersion}")
 }
 
 java {

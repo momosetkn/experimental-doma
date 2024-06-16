@@ -5,21 +5,16 @@ import momosetkn.infras.doma.doma.contexts.Db
 import momosetkn.infras.doma.doma.contexts.transactionWithContext
 import momosetkn.infras.doma.repositories.CompaniesRepository
 import momosetkn.infras.doma.repositories.DatabaseDaoImpl
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
 
-/**
- * エントリーポイント
- */
-fun main() {
+fun insertData() {
     ConfigureLog.configLog()
 
     val log = getLog()
 
     log.info("hello world")
 
-    startKoin { modules(appDependencies) }
     val db = Koin.get<Db>()
     val companiesRepository = Koin.get<CompaniesRepository>()
 

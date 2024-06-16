@@ -24,7 +24,9 @@ import org.komapper.core.dsl.metamodel.EntityMetamodel
 import org.komapper.core.dsl.operator.columnExpression
 import org.komapper.core.dsl.operator.countDistinct
 import org.komapper.core.dsl.query.EntitySelectQuery
+import org.komapper.core.dsl.query.Query
 import org.komapper.core.dsl.query.SelectQueryBuilder
+import org.komapper.core.dsl.query.getNotNull
 import org.komapper.core.dsl.scope.FilterScope
 import org.komapper.jdbc.JdbcDatabase
 import java.time.LocalDateTime
