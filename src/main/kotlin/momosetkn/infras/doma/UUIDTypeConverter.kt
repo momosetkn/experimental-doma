@@ -4,7 +4,7 @@ import org.seasar.doma.ExternalDomain
 import org.seasar.doma.jdbc.domain.DomainConverter
 import java.util.UUID
 
-// https://doma.readthedocs.io/en/2.19.2/basic/
+// https://doma.readthedocs.io/ja/latest/basic/
 @ExternalDomain
 class UUIDTypeConverter : DomainConverter<UUID, Object> {
     @Suppress("MagicNumber")
