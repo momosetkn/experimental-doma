@@ -129,15 +129,17 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+kapt {
+    arguments {
+        // https://doma.readthedocs.io/ja/latest/annotation-processing/#options
+        arg("doma.domain.converters", "momosetkn.infras.doma.UUIDTypeConverterProvider")
+    }
+}
+
 tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         kotlinOptions.freeCompilerArgs += listOf("-opt-in=org.komapper.annotation.KomapperExperimentalAssociation")
         kotlinOptions.freeCompilerArgs += listOf("-Xcontext-receivers")
-        // https://doma.readthedocs.io/ja/latest/annotation-processing/#options
-        // FIXME: 以下のエラーが出る
-        // > Task :kspKotlin FAILED
-        // e: Invalid argument: -Adoma.domain.converters=momosetkn.infras.doma.UUIDTypeConverterProvider
-        kotlinOptions.freeCompilerArgs += listOf("-Adoma.domain.converters=momosetkn.infras.doma.UUIDTypeConverterProvider")
     }
 }
 

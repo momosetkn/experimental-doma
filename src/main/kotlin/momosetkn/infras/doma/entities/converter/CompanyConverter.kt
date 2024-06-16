@@ -16,7 +16,7 @@ object CompanyConverter {
     fun InfraCompanies.toModel(): Company {
         return Company(
             id = id,
-            uuid = UUID.fromString(uuid),
+            uuid = uuid,
             name = name,
             news = news.map { it.toModel() },
             products = products.map { it.toModel() },
@@ -76,7 +76,7 @@ object CompanyConverter {
     fun Company.toInfra(): InfraCompanies {
         return InfraCompanies(
             id = id,
-            uuid = uuid.toString(),
+            uuid = uuid,
             name = name,
             updatedBy = updatedBy,
             updatedAt = updatedAt,
