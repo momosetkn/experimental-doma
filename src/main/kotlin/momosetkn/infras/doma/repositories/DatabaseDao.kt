@@ -19,6 +19,7 @@ use test;
 
 CREATE TABLE companies (
     id VARCHAR(255) PRIMARY KEY,
+    uuid varbinary(16) ,
     name VARCHAR(255) NOT NULL,
     updated_by VARCHAR(255) NOT NULL,
     updated_at TIMESTAMP NOT NULL,

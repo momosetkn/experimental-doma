@@ -12,6 +12,7 @@ import org.seasar.doma.Transient
 @Table(name = "companies")
 data class InfraCompanies(
     @Id @Column(name = "id") val id: String,
+    @Id @Column(name = "uuid") val uuid: java.util.UUID, // TODO: varbinary(16)でこれはどうなるのか
     @Column(name = "name") val name: String,
 
     @Column(name = "updated_by") val updatedBy: String,

@@ -11,6 +11,7 @@ import momosetkn.infras.doma.entities.meta.Meta
 import momosetkn.infras.doma.entities.meta.companies
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
+import java.util.UUID
 
 class ExampleTest : FunSpec({
     val db = Koin.get<Db>()
@@ -22,6 +23,7 @@ class ExampleTest : FunSpec({
     test("test") {
         val item = InfraCompanies(
             id = "1",
+            uuid = UUID.randomUUID(),
             name = "name1",
             updatedBy = "updatedBy1",
             updatedAt = java.time.LocalDateTime.of(2021, 1, 1, 1, 1, 1),

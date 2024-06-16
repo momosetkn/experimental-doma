@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 data class Company(
     val id: String,
+    val uuid: java.util.UUID,
     val name: String,
     val news: List<News>,
     val products: List<Product>,

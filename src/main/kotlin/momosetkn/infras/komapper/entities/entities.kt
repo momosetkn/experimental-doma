@@ -7,6 +7,7 @@ import org.komapper.annotation.KomapperExperimentalAssociation
 import org.komapper.annotation.KomapperId
 import org.komapper.annotation.KomapperOneToMany
 import org.komapper.annotation.KomapperTable
+import java.util.UUID
 
 @OptIn(KomapperExperimentalAssociation::class)
 @KomapperEntity
@@ -19,6 +20,8 @@ data class InfraCompanies(
     @KomapperId
     @KomapperColumn(name = "id")
     val id: String,
+    @KomapperColumn(name = "uuid")
+    val uuid: UUID,
     @KomapperColumn(name = "name") val name: String,
 
     @KomapperColumn(name = "updated_by") val updatedBy: String,

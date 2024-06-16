@@ -52,6 +52,7 @@ val dummyDataDependencies = module {
     factory {
         Company(
             id = get(),
+            uuid = UUID.randomUUID(),
             name = get(),
             employees = get(named("List<Employee>")),
             news = get(named("List<News><")),

@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
+
 val kotlin_version: String by project
 val logback_version: String by project
 val koin_version: String by project
@@ -90,7 +92,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
-    val komapperVersion = "1.17.0"
+    val komapperVersion = "1.18.1"
     platform("org.komapper:komapper-platform:$komapperVersion").let {
         implementation(it)
         ksp(it)
@@ -131,6 +133,11 @@ tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         kotlinOptions.freeCompilerArgs += listOf("-opt-in=org.komapper.annotation.KomapperExperimentalAssociation")
         kotlinOptions.freeCompilerArgs += listOf("-Xcontext-receivers")
+        // https://doma.readthedocs.io/ja/latest/annotation-processing/#options
+        // FIXME: 以下のエラーが出る
+        // > Task :kspKotlin FAILED
+        // e: Invalid argument: -Adoma.domain.converters=momosetkn.infras.doma.UUIDTypeConverterProvider
+        kotlinOptions.freeCompilerArgs += listOf("-Adoma.domain.converters=momosetkn.infras.doma.UUIDTypeConverterProvider")
     }
 }
 

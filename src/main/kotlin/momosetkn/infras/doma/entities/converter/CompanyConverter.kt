@@ -10,11 +10,13 @@ import momosetkn.infras.doma.entities.InfraEmployees
 import momosetkn.infras.doma.entities.InfraNews
 import momosetkn.infras.doma.entities.InfraProductDetails
 import momosetkn.infras.doma.entities.InfraProducts
+import java.util.UUID
 
 object CompanyConverter {
     fun InfraCompanies.toModel(): Company {
         return Company(
             id = id,
+            uuid = UUID.fromString(uuid),
             name = name,
             news = news.map { it.toModel() },
             products = products.map { it.toModel() },
@@ -74,6 +76,7 @@ object CompanyConverter {
     fun Company.toInfra(): InfraCompanies {
         return InfraCompanies(
             id = id,
+            uuid = uuid.toString(),
             name = name,
             updatedBy = updatedBy,
             updatedAt = updatedAt,

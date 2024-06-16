@@ -48,6 +48,7 @@ object CompanyConverter {
 
         return Company(
             id = id,
+            uuid = uuid,
             name = name,
             news = news.map { it.toModel() },
             products = products.map { it.toModel(productDetailsMap.getOrDefault(it.id, emptyList())) },
@@ -116,6 +117,7 @@ object CompanyConverter {
         return Tuple5(
             InfraCompanies(
                 id = id,
+                uuid = java.util.UUID.randomUUID(),
                 name = name,
                 updatedBy = updatedBy,
                 updatedAt = updatedAt,

@@ -9,6 +9,7 @@ import momosetkn.infras.doma.entities.meta.Meta
 import momosetkn.infras.doma.entities.meta.companies
 import org.koin.core.component.get
 import java.time.LocalDateTime
+import java.util.UUID
 
 class CountDistinctTest : FunSpec({
     val db = Koin.get<Db>()
@@ -22,6 +23,7 @@ class CountDistinctTest : FunSpec({
         val items = listOf(
             InfraCompanies(
                 id = "${id++}",
+                uuid = UUID.fromString("00000000-0000-0000-0000-000000000000"),
                 name = "name1",
                 updatedBy = "updatedBy1",
                 updatedAt = LocalDateTime.of(2021, 1, 1, 1, 1, 1),
@@ -30,6 +32,7 @@ class CountDistinctTest : FunSpec({
             ),
             InfraCompanies(
                 id = "${id++}",
+                uuid =  UUID.fromString("00000000-0000-0000-0000-000000000001"),
                 name = "name1",
                 updatedBy = "updatedBy1",
                 updatedAt = LocalDateTime.of(2021, 1, 1, 1, 1, 1),
@@ -38,6 +41,7 @@ class CountDistinctTest : FunSpec({
             ),
             InfraCompanies(
                 id = "${id++}",
+                uuid =  UUID.fromString("00000000-0000-0000-0000-000000000002"),
                 name = "name1",
                 updatedBy = "updatedBy1",
                 updatedAt = LocalDateTime.of(2021, 1, 1, 1, 1, 1),
@@ -46,6 +50,7 @@ class CountDistinctTest : FunSpec({
             ),
             InfraCompanies(
                 id = "${id++}",
+                uuid =  UUID.fromString("00000000-0000-0000-0000-000000000003"),
                 name = "name1",
                 updatedBy = "updatedBy1",
                 updatedAt = LocalDateTime.of(2021, 1, 1, 1, 1, 1),
@@ -54,6 +59,7 @@ class CountDistinctTest : FunSpec({
             ),
             InfraCompanies(
                 id = "${id++}",
+                uuid =  UUID.fromString("00000000-0000-0000-0000-000000000004"),
                 name = "name1",
                 updatedBy = "updatedBy1",
                 updatedAt = LocalDateTime.of(2021, 1, 1, 1, 1, 1),

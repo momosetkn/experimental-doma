@@ -22,6 +22,7 @@ class KomapperExampleTest : FunSpec({
     test("test") {
         val item = InfraCompanies(
             id = "1",
+            uuid = java.util.UUID.randomUUID(),
             name = "name1",
             updatedBy = "updatedBy",
             updatedAt = java.time.LocalDateTime.of(2021, 1, 1, 1, 1, 1),
