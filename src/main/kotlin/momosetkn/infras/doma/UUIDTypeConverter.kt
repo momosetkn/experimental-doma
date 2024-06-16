@@ -8,7 +8,7 @@ import java.util.UUID
 @ExternalDomain
 class UUIDTypeConverter : DomainConverter<UUID, Object> {
     @Suppress("MagicNumber")
-    override fun fromDomainToValue(exterior: UUID?): Object {
+    override fun fromDomainToValue(exterior: UUID?): Object? {
         if (exterior == null) {
             return null
         }
