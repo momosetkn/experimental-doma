@@ -1,5 +1,6 @@
 package momosetkn.infras.komapper.repositories
 
+import kotlinx.coroutines.delay
 import momosetkn.applyIf
 import momosetkn.domain.Company
 import momosetkn.infras.komapper.entities.InfraCompanies
@@ -119,6 +120,23 @@ class CompaniesRepository(
         return result
     }
 
+
+    fun slowQuery(): List<InfraCompanies> {
+        val metaCompany = Meta.infraCompanies
+
+      return  ReportSlowQueryJdbcDatabaseProxy(db).runQuery {
+            Thread.sleep(2_000)
+            QueryDsl.from(metaCompany)
+        }
+    }
+
+    fun notSlowQuery(): List<InfraCompanies> {
+        val metaCompany = Meta.infraCompanies
+
+      return  ReportSlowQueryJdbcDatabaseProxy(db).runQuery {
+            QueryDsl.from(metaCompany)
+        }
+    }
 
     fun findIdAndSameCreatorCountList(
         sameCreator: Boolean = false,

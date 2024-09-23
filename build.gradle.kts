@@ -107,6 +107,9 @@ dependencies {
 //    implementation("org.komapper:komapper-r2dbc")
 //    implementation("io.r2dbc:r2dbc-pool")
 
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 
