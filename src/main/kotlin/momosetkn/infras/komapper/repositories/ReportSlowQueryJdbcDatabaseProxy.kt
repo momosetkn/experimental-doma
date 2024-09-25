@@ -18,7 +18,7 @@ class ReportSlowQueryJdbcDatabaseProxy(
         val slowQueryError = RuntimeException("slow query found. threshold-time is $SLOW_QUERY_THRESHOLD_TIME")
         val job = CoroutineScope(Dispatchers.IO).launch {
             delay(SLOW_QUERY_THRESHOLD_TIME)
-            log.warn("completed delay", slowQueryError)
+            log.warn("slow query found", slowQueryError)
         }
         return original.runQuery(query).also {
             job.cancel()
@@ -29,7 +29,7 @@ class ReportSlowQueryJdbcDatabaseProxy(
         val slowQueryError = RuntimeException("slow query found. threshold-time is $SLOW_QUERY_THRESHOLD_TIME")
         val job = CoroutineScope(Dispatchers.IO).launch {
             delay(SLOW_QUERY_THRESHOLD_TIME)
-            log.warn("completed delay", slowQueryError)
+            log.warn("slow query found", slowQueryError)
         }
         return original.runQuery(block).also {
             job.cancel()
