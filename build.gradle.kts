@@ -21,7 +21,7 @@ plugins {
     id("org.liquibase.gradle") version "2.2.0"
     kotlin("plugin.serialization") version "1.9.24"
     id("io.gitlab.arturbosch.detekt").version("1.23.6")
-    id("org.komapper.gradle") version "1.14.0"
+    id("org.komapper.gradle") version "3.1.0"
     id("org.domaframework.doma.codegen") version "2.0.0"
 
     application
@@ -92,7 +92,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
-    val komapperVersion = "1.18.1"
+    val komapperVersion = "3.1.0"
     platform("org.komapper:komapper-platform:$komapperVersion").let {
         implementation(it)
         ksp(it)
@@ -240,7 +240,7 @@ komapper {
         register("mysql") {
             jdbc {
                 driver.set("com.mysql.cj.jdbc.Driver")
-                url.set("jdbc:mysql://localhost:3306")
+                url.set("jdbc:mysql://localhost:3308")
                 user.set("root")
                 password.set("")
             }

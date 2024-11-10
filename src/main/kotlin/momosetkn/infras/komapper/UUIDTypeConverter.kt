@@ -3,7 +3,8 @@ package momosetkn.infras.komapper
 import org.komapper.core.spi.DataTypeConverter
 import java.nio.ByteBuffer
 import java.util.UUID
-import kotlin.reflect.KClass
+import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
 @Suppress("MaxLineLength")
 /**
@@ -16,8 +17,8 @@ import kotlin.reflect.KClass
  * ```
  */
 class UUIDTypeConverter : DataTypeConverter<UUID, ByteArray> {
-    override val exteriorClass: KClass<UUID> = UUID::class
-    override val interiorClass: KClass<ByteArray> = ByteArray::class
+    override val exteriorType: KType = typeOf<UUID>()
+    override val interiorType: KType = typeOf<ByteArray>()
 
     // https://qiita.com/moaikids/items/f987b4d5c1736335d103
     @Suppress("MagicNumber")
